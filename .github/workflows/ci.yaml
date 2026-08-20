@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, reopened, synchronize]
+  push:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & test (stub)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: echo "build step placeholder — no build system defined yet"
+      - name: Test
+        run: echo "test step placeholder — no test suite defined yet"
+
+  deploy:
+    name: Deploy (stub)
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "deploy step placeholder — no deploy target defined yet"
+
+  pr-title-has-task:
+    name: PR title references a task
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title for task number
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          echo "PR title: $PR_TITLE"
+          if [[ "$PR_TITLE" =~ \#[0-9]+ ]]; then
+            echo "OK: task number found in PR title"
+          else
+            echo "FAIL: PR title must reference a task, e.g. '#12 Fix zone map colors'"
+            exit 1
+          fi

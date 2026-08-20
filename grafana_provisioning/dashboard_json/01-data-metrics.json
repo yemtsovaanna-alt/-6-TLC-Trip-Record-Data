@@ -1,0 +1,329 @@
+{
+  "id": null,
+  "uid": "nyc-taxi-data-metrics",
+  "title": "NYC Taxi — Данные и продуктовые метрики",
+  "tags": [
+    "nyc-taxi"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 40,
+  "version": 6,
+  "refresh": "",
+  "time": {
+    "from": "now-7y",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 0,
+      "title": "",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 6
+      },
+      "type": "text",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "## Вопрос: здоров ли рынок такси год к году, и не в ущерб ли водителям/райдерам?\n\n**North Star** (`avg_daily_trips`) — растёт ли объём реально доставляемой ценности.\n**Guardrail** (время ожидания, оплата водителя) — не растёт ли North Star за счёт того,\nчто кто-то из сторон рынка страдает. **Proxy** (тариф/милю, ликвидность) — быстрые опережающие\nсигналы дисбаланса, которые двигаются раньше, чем North Star успевает отреагировать.\n\n**Короткий ответ:** рынок восстанавливается после провала COVID (2020: −51% к 2019), но к 2025\nвсё ещё на −20% от пика 2019. При этом guardrail-ы держатся здорово — ожидание стабильно\n(4-5 мин), оплата водителя растёт (+29% за 7 лет, эффект минимального тарифа TLC с 2023) —\nрост не идёт за счёт водителей."
+      },
+      "transparent": false
+    },
+    {
+      "id": 1,
+      "title": "North Star: среднесуточные поездки по годам",
+      "gridPos": {
+        "x": 0,
+        "y": 6,
+        "w": 12,
+        "h": 8
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS \"time\", avg_daily_trips FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 2,
+      "title": "Guardrail: время ожидания подачи, мин",
+      "gridPos": {
+        "x": 12,
+        "y": 6,
+        "w": 12,
+        "h": 8
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS \"time\", round((med_wait_sec/60.0)::numeric,2) AS med_wait_min FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "m"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 3,
+      "title": "Guardrail: почасовая оплата водителя, $",
+      "gridPos": {
+        "x": 0,
+        "y": 14,
+        "w": 12,
+        "h": 8
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS \"time\", med_hourly_pay FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 4,
+      "title": "Proxy: тариф за милю, $",
+      "gridPos": {
+        "x": 12,
+        "y": 14,
+        "w": 12,
+        "h": 8
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS \"time\", med_fare_per_mile FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 5,
+      "title": "Proxy: ликвидность рынка (поездок / активная зона-час)",
+      "gridPos": {
+        "x": 0,
+        "y": 22,
+        "w": 12,
+        "h": 8
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS \"time\", avg_trips_per_active_zone_hour FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 6,
+      "title": "Таблица метрик по годам",
+      "gridPos": {
+        "x": 12,
+        "y": 22,
+        "w": 12,
+        "h": 8
+      },
+      "type": "table",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT * FROM product_metrics_yearly WHERE year IN (${year:sqlstring}) ORDER BY year",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {}
+    }
+  ],
+  "links": [
+    {
+      "type": "dashboards",
+      "asDropdown": true,
+      "title": "NYC Taxi",
+      "keepTime": true,
+      "includeVars": true,
+      "targetBlank": false
+    }
+  ],
+  "editable": true,
+  "annotations": {
+    "list": [
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "nyc_taxi_pg"
+        },
+        "enable": false,
+        "iconColor": "red",
+        "name": "Ключевые события",
+        "target": {
+          "rawSql": "SELECT event_time AS \"time\", title AS text, tags FROM dashboard_events ORDER BY 1",
+          "format": "table"
+        },
+        "mappings": {}
+      }
+    ]
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "year",
+        "label": "Год",
+        "type": "query",
+        "datasource": {
+          "type": "postgres",
+          "uid": "nyc_taxi_pg"
+        },
+        "query": "SELECT DISTINCT year FROM product_metrics_yearly ORDER BY year",
+        "definition": "SELECT DISTINCT year FROM product_metrics_yearly ORDER BY year",
+        "refresh": 1,
+        "multi": true,
+        "includeAll": true,
+        "current": {},
+        "sort": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,373 @@
+{
+  "id": null,
+  "uid": "nyc-taxi-home",
+  "title": "NYC Taxi — Обзор",
+  "tags": [
+    "nyc-taxi"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 40,
+  "version": 6,
+  "refresh": "",
+  "time": {
+    "from": "now-7y",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 0,
+      "title": "",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 7
+      },
+      "type": "text",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "## NYC Taxi — обзор\n\nМетрики без агрегатора: `#9BACD8` → `#F98513` · Uber `#06C167` · Lyft `#FF00BF` · wait: FHVHV 2024.\n\n| Доска | О чём |\n|-------|--------|\n| [Метрики](/d/nyc-taxi-data-metrics) | North Star, wait, оплата водителя |\n| [Погода / метро](/d/nyc-taxi-weather-metro) | Дождь, congestion pricing |\n| [Спрос / wait-карта](/d/nyc-taxi-demand-price) | Карта зон, теплокарты ожидания, фильтры |\n| [COVID](/d/nyc-taxi-covid) | Восстановление + почему green не ожил |\n| [Агрегаторы](/d/nyc-taxi-aggregators) | Uber vs Lyft, зоны доминирования |\n| [Мероприятия](/d/nyc-taxi-events) | NFL, NBA, MLB, марафон → всплески такси |\n\nKPI ниже — последний год + стрелка год-к-году (сравнение с предыдущим годом в ряду)."
+      },
+      "transparent": false
+    },
+    {
+      "id": 1,
+      "title": "Среднесуточные поездки (последний год)",
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 6,
+        "h": 5
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS time, avg_daily_trips FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto",
+        "wideLayout": true,
+        "showPercentChange": true,
+        "percentChangeColorMode": "standard"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Медиана ожидания, мин",
+      "gridPos": {
+        "x": 6,
+        "y": 7,
+        "w": 6,
+        "h": 5
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS time, round((med_wait_sec/60.0)::numeric, 2) AS med_wait_min FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "m"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto",
+        "wideLayout": true,
+        "showPercentChange": true,
+        "percentChangeColorMode": "standard"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Оплата водителя, $/час",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 6,
+        "h": 5
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS time, med_hourly_pay FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto",
+        "wideLayout": true,
+        "showPercentChange": true,
+        "percentChangeColorMode": "standard"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Доля Uber, %",
+      "gridPos": {
+        "x": 18,
+        "y": 7,
+        "w": 6,
+        "h": 5
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "WITH yr AS (\n  SELECT extract(year FROM month)::int AS yr, aggregator, sum(trips) AS trips\n  FROM aggregator_monthly GROUP BY 1, 2\n),\ntot AS (SELECT yr, sum(trips) AS total FROM yr GROUP BY 1)\nSELECT make_date(y.yr, 1, 1) AS time, round(100.0 * y.trips / t.total, 1) AS uber_share\nFROM yr y JOIN tot t ON t.yr = y.yr\nWHERE y.aggregator = 'Uber' ORDER BY y.yr",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#06C167"
+          },
+          "custom": {},
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto",
+        "wideLayout": true,
+        "showPercentChange": true,
+        "percentChangeColorMode": "standard"
+      }
+    },
+    {
+      "id": 5,
+      "title": "North Star: поездки/день по годам",
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 12,
+        "h": 8
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS \"time\", avg_daily_trips FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 6,
+      "title": "Guardrail: ожидание, мин",
+      "gridPos": {
+        "x": 12,
+        "y": 12,
+        "w": 12,
+        "h": 8
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT make_date(year::int,1,1) AS \"time\", round((med_wait_sec/60.0)::numeric,2) AS med_wait_min FROM product_metrics_yearly ORDER BY year",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "m"
+        },
+        "overrides": []
+      },
+      "options": {}
+    }
+  ],
+  "links": [
+    {
+      "type": "dashboards",
+      "asDropdown": true,
+      "title": "NYC Taxi",
+      "keepTime": true,
+      "includeVars": true,
+      "targetBlank": false
+    }
+  ],
+  "editable": true,
+  "annotations": {
+    "list": [
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "nyc_taxi_pg"
+        },
+        "enable": false,
+        "iconColor": "red",
+        "name": "Ключевые события",
+        "target": {
+          "rawSql": "SELECT event_time AS \"time\", title AS text, tags FROM dashboard_events ORDER BY 1",
+          "format": "table"
+        },
+        "mappings": {}
+      }
+    ]
+  },
+  "templating": {
+    "list": []
+  }
+}

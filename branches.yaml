@@ -1,0 +1,16 @@
+branch_protection:
+  policies:
+    - target: branch
+      matches: "main"
+      rules:
+        - prevent_deletion
+        - prevent_force_push
+        - prevent_non_pr_changes
+
+pull_request:
+  branch_cleanup:
+    matches: ["**", "!hotfix/**", "!release/**"]
+
+# Реальное применение правил — GitHub Settings → Branches → Branch protection
+# rules для main (этот файл GitHub не читает сам по себе, он документирует
+# политику; enforcement настраивается через UI/API репозитория).

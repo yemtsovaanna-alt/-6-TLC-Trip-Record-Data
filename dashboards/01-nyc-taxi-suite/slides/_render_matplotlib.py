@@ -87,7 +87,7 @@ def slide_weather():
              fontsize=28, fontweight="bold", color=TEXT, va="top")
     fig.text(0.04, 0.825,
              "Дождь: +1.44% поездок на 10 мм по городу. Эффект сильнее рядом с метро; "
-             "на Staten Island не значим.\nCongestion pricing (янв 2025) бьёт только Manhattan.",
+             "на Staten Island не значим.\nCongestion pricing (янв 2025) бьет только Manhattan.",
              fontsize=14, color=MUTED, linespacing=1.45, va="top")
 
     kpi_box(fig, 0.04, 0.64, 0.29, 0.13, "+2.11%", "Manhattan · дождь / 10 мм\n(p < 0.001)", HI)
@@ -110,7 +110,7 @@ def slide_weather():
           [c["borough"] for c in cong],
           [c["yoy"] for c in cong],
           max(abs(c["yoy"]) for c in cong),
-          "Congestion pricing · объём YoY",
+          "Congestion pricing · объем YoY",
           "год к году после введения сбора",
           label_fs=11)
 
@@ -155,7 +155,7 @@ def slide_events():
              fontsize=28, fontweight="bold", color=TEXT, va="top")
     fig.text(0.04, 0.825,
              f"На {avg['n']:,} событиях (NFL/NBA/MLB/MLS/концерты/парады) медианный разъезд после "
-             f"старта даёт +{avg['post']}% pickups\nк обычной базе того же часа и дня недели.",
+             f"старта дает +{avg['post']}% pickups\nк обычной базе того же часа и дня недели.",
              fontsize=14, color=MUTED, linespacing=1.45, va="top")
 
     kpi_box(fig, 0.04, 0.64, 0.29, 0.13, f"+{avg['post']}%", "Средний post-PU lift\n+3…+5 ч после старта", HI)

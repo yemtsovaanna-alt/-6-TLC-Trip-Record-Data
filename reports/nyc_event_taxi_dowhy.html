@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Events x Taxi — DoWhy</title>
+<style>
+:root { --bg:#0f1419; --card:#1a222c; --text:#e8eef4; --muted:#9aa7b5; --accent:#0d8f82; }
+body { margin:0; font-family:Segoe UI,system-ui,sans-serif; background:var(--bg); color:var(--text);
+  line-height:1.55; max-width:920px; margin-inline:auto; padding:32px 20px 64px; }
+h1 { font-size:1.75rem; margin:0 0 8px; }
+h2 { font-size:1.25rem; margin:28px 0 10px; color:var(--accent); }
+.lead { color:var(--muted); font-size:1.05rem; margin-bottom:24px; }
+.card { background:var(--card); border-radius:12px; padding:16px 18px; margin:14px 0; }
+.kpi { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.kpi b { display:block; font-size:1.5rem; color:var(--accent); }
+.kpi span { color:var(--muted); font-size:0.85rem; }
+table { width:100%; border-collapse:collapse; font-size:0.92rem; }
+th, td { text-align:left; padding:8px 10px; border-bottom:1px solid #2a3440; }
+th { color:var(--muted); }
+.verdict { border-left:4px solid var(--accent); padding-left:14px; margin:18px 0; }
+.reject { border-left-color:#c62828; }
+</style>
+<h1>Мероприятия → такси: DoWhy</h1>
+<p class="lead">Полная проверка гипотезы через DoWhy (backdoor + refutation).
+Outcome = <code>post_pu_lift_pct</code> (разъезд +3…+5 ч после события).
+N = 636 событий (без MetLife/NJ).</p>
+
+<div class="verdict card">
+<strong>Гипотеза:</strong> чем дороже мероприятие и чем дальше от метро — тем сильнее всплеск такси после финала.
+</div>
+
+<h2>1. Расстояние до метро → разъезд на такси</h2>
+<div class="kpi">
+  <div class="card"><b>-13.72 pp</b><span>DoWhy ATE на 1 ln(м) dist</span></div>
+  <div class="card"><b>p = 2.645e-07</b><span>после контроля price_tier, тип, календарь, погода</span></div>
+</div>
+<p>Naive r = -0.202. Cluster-robust (venue): — pp (p=—).</p>
+
+<h2>2. Price tier → разъезд на такси</h2>
+<div class="kpi">
+  <div class="card"><b>+3.07 pp</b><span>DoWhy ATE +1 tier</span></div>
+  <div class="card"><b>p = 0.1287</b><span>после контроля dist, тип, календарь, погода</span></div>
+</div>
+<p>Naive r = +0.060.</p>
+
+<h2>3. Refutation tests (dist model)</h2>
+<table>
+<tr><th>Test</th><th>Original ATE</th><th>Refuted ATE</th></tr>
+<tr><td>Placebo treatment (permute)</td><td>-13.72 pp</td><td>-0.30 pp</td></tr>
+<tr><td>Data subset 80%</td><td>-13.72 pp</td><td>-13.61 pp</td></tr>
+<tr><td>Random common cause</td><td>-13.72 pp</td><td>-13.70 pp</td></tr>
+</table>
+
+<h2>4. Venue-level (агрегат по площадке)</h2>
+<p>Dist model ATE = -11.92 pp (p=0.1567). Price model ATE = +3.35 pp (p=0.6805).</p>
+
+<div class="verdict card reject">
+<strong>Вывод для NYC:</strong> гипотеза «дальше от метро → больше такси» <em>не подтверждается</em>
+(DoWhy ATE отрицательный: у MSG у Penn Station поток такси максимальный).
+Price tier — слабый положительный эффект (премиум-площадки дают больший разъезд).
+Главный драйвер — <strong>масштаб события в транспортном узле</strong>, не изоляция от метро.
+</div>
+
+<p style="color:var(--muted);font-size:0.85rem">Скрипт: taxi_weather_analysis/causal_event_taxi_dowhy.py</p>

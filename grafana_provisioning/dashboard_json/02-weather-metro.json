@@ -1,0 +1,450 @@
+{
+  "id": null,
+  "uid": "nyc-taxi-weather-metro",
+  "title": "NYC Taxi — Погода, метро, congestion pricing",
+  "tags": [
+    "nyc-taxi"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 40,
+  "version": 6,
+  "refresh": "",
+  "time": {
+    "from": "now-7y",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 0,
+      "title": "",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 7
+      },
+      "type": "text",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "## Вопрос: влияет ли погода на спрос такси, через какой канал, и что сделал congestion pricing?\n\n**Короткий ответ:** дождь увеличивает спрос на такси (+1.44% на 10мм осадков, город в целом),\nно эффект сильно неравномерен — сильнее всего в Манхэттене (+2.11%, значимо), исчезает на\nСтатен-Айленде (+0.23%, **не значимо**, p=0.46). Субституция с метро реальна, но только там,\nгде метро физически рядом (+1.77% в ближних к метро зонах против +0.33% в дальних, не значимо).\nCongestion pricing (с 5 января 2025) уронил такси-спрос в Манхэттене на 9 процентных пунктов\nотносительно тренда — единственный округ, где объём упал год-к-году, на фоне роста везде\nостальные.\n\n**Осторожно:** таблицы ниже показывают p-value — красная заливка значит эффект статистически\nне отличим от нуля, не интерпретируйте такие цифры как реальный эффект."
+      },
+      "transparent": false
+    },
+    {
+      "id": 1,
+      "title": "Эффект дождя на поездки по округам",
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 12,
+        "h": 9
+      },
+      "type": "table",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT borough, pct_per_10mm_rain, p_value, n_days FROM weather_effect_by_borough WHERE borough IN (${borough:sqlstring}) ORDER BY pct_per_10mm_rain DESC",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "cellOptions": {
+              "type": "auto"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p_value"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background",
+                  "mode": "basic"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#F98513",
+                      "value": null
+                    },
+                    {
+                      "color": "semi-dark-red",
+                      "value": 0.05
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          }
+        ]
+      },
+      "options": {}
+    },
+    {
+      "id": 2,
+      "title": "Эффект дождя по доступности метро (терцили)",
+      "gridPos": {
+        "x": 12,
+        "y": 7,
+        "w": 12,
+        "h": 9
+      },
+      "type": "table",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT tier, pct_per_10mm_rain, p_value, n_zones FROM rain_effect_by_subway_tier ORDER BY pct_per_10mm_rain DESC",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "cellOptions": {
+              "type": "auto"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p_value"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background",
+                  "mode": "basic"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#F98513",
+                      "value": null
+                    },
+                    {
+                      "color": "semi-dark-red",
+                      "value": 0.05
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          }
+        ]
+      },
+      "options": {}
+    },
+    {
+      "id": 3,
+      "title": "Congestion pricing: поездки год-к-году, %",
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 12,
+        "h": 8
+      },
+      "type": "barchart",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT borough, yoy_pct FROM congestion_pricing_yoy WHERE borough IN (${borough:sqlstring}) ORDER BY yoy_pct",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "xTickLabelRotation": 0
+      }
+    },
+    {
+      "id": 4,
+      "title": "Congestion pricing: тариф год-к-году, %",
+      "gridPos": {
+        "x": 12,
+        "y": 16,
+        "w": 12,
+        "h": 8
+      },
+      "type": "barchart",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT borough, fare_yoy_pct FROM congestion_pricing_yoy WHERE borough IN (${borough:sqlstring}) ORDER BY fare_yoy_pct DESC",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "xTickLabelRotation": 0
+      }
+    },
+    {
+      "id": 5,
+      "title": "Ежедневные поездки, весь период",
+      "gridPos": {
+        "x": 0,
+        "y": 24,
+        "w": 24,
+        "h": 7
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT date AS \"time\", trips FROM daily_citywide ORDER BY date",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 6,
+      "title": "Осадки, мм/день",
+      "gridPos": {
+        "x": 0,
+        "y": 31,
+        "w": 12,
+        "h": 7
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT date AS \"time\", prcp_mm FROM daily_citywide ORDER BY date",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {},
+          "unit": "lengthmm"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 7,
+      "title": "Ежедневный райдершип метро (MTA)",
+      "gridPos": {
+        "x": 12,
+        "y": 31,
+        "w": 12,
+        "h": 7
+      },
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT date AS \"time\", subway_ridership FROM daily_citywide ORDER BY date",
+          "rawQuery": true,
+          "format": "time_series",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#9BACD8"
+          },
+          "custom": {},
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {}
+    }
+  ],
+  "links": [
+    {
+      "type": "dashboards",
+      "asDropdown": true,
+      "title": "NYC Taxi",
+      "keepTime": true,
+      "includeVars": true,
+      "targetBlank": false
+    }
+  ],
+  "editable": true,
+  "annotations": {
+    "list": [
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "nyc_taxi_pg"
+        },
+        "enable": false,
+        "iconColor": "red",
+        "name": "Ключевые события",
+        "target": {
+          "rawSql": "SELECT event_time AS \"time\", title AS text, tags FROM dashboard_events ORDER BY 1",
+          "format": "table"
+        },
+        "mappings": {}
+      }
+    ]
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "borough",
+        "label": "Округ",
+        "type": "query",
+        "datasource": {
+          "type": "postgres",
+          "uid": "nyc_taxi_pg"
+        },
+        "query": "SELECT DISTINCT borough FROM daily_by_borough ORDER BY borough",
+        "definition": "SELECT DISTINCT borough FROM daily_by_borough ORDER BY borough",
+        "refresh": 1,
+        "multi": true,
+        "includeAll": true,
+        "current": {},
+        "sort": 1
+      }
+    ]
+  }
+}

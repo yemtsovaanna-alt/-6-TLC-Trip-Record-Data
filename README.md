@@ -2,8 +2,8 @@
 
 Репозиторий объединяет несколько независимых аналитических треков по данным NYC TLC.
 Флагманский дашборд репозитория — **NYC FHVHV Taxi Overview** (дашборды 1–2, раздел
-`04-overview-competition`), FHVHV (Uber/Lyft) за 2025–2026. Основной по охвату данных
-трек (`01-nyc-taxi-suite`, дашборды 3–9) рассматривает все типы поездок —
+`01-overview-competition`), FHVHV (Uber/Lyft) за 2025–2026. Основной по охвату данных
+трек (`02-nyc-taxi-suite`, дашборды 3–9) рассматривает все типы поездок —
 Yellow/Green/FHV/FHVHV (такси и Uber/Lyft/Via/Juno) — за 2019–2026. Ещё два трека
 (дашборды 10–11) — тоже FHVHV за 2025–2026: доступность поездок (WAV/AAR) и совместные
 поездки (shared rides). Итог каждого трека — один или несколько **Grafana-дашбордов**
@@ -17,17 +17,17 @@ Yellow/Green/FHV/FHVHV (такси и Uber/Lyft/Via/Juno) — за 2019–2026. 
 
 | # | Дашборд | Раздел | О чем | Ответственный | Подробнее |
 |---|---|---|---|---|---|
-| 1 | **NYC FHVHV Taxi Overview** (основной дашборд репозитория) | [`04-overview-competition/`](dashboards/04-overview-competition/README.md) | Объем поездок, выручка, комиссия, гео-экономика | [@yemtsovaanna-alt](https://github.com/yemtsovaanna-alt) | [README.md](dashboards/04-overview-competition/README.md) |
-| 2 | **Uber vs Lyft: Competition Overview** | [`04-overview-competition/`](dashboards/04-overview-competition/README.md) | Прямое сравнение Uber/Lyft: бронирования, типы поездок, ожидание, surge | [@yemtsovaanna-alt](https://github.com/yemtsovaanna-alt) | [README.md](dashboards/04-overview-competition/README.md) |
-| 3 | **NYC Taxi — Обзор** (home раздела) | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | North Star/Guardrail метрики одним взглядом | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#00-home) |
-| 4 | **NYC Taxi — Данные и продуктовые метрики** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | North Star/Guardrail/Proxy метрики по годам | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#01-data-metrics) |
-| 5 | **NYC Taxi — Погода, метро, congestion pricing** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Дождь/температура/метро vs спрос, эффект платного въезда в Manhattan CBD | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#02-weather-metro) |
-| 6 | **NYC Taxi — Спрос, цена, прогноз** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Ожидание по зонам/часам, точность прогноза спроса, эластичность цены | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#03-demand-price) |
-| 7 | **NYC Taxi — Эффект COVID по типам такси** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Падение и восстановление по типам такси/округам/агрегаторам, 2019=100 | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#04-covid) |
-| 8 | **NYC Taxi — Конкуренция агрегаторов и зоны доминирования** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Доли рынка Uber/Lyft/Via/Juno по времени, округам, зонам | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#05-aggregators) |
-| 9 | **NYC Taxi — Мероприятия и спрос на такси** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Всплеск спроса вокруг концертов/матчей, DoWhy-причинность | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#06-events) |
-| 10 | **WAV/Accessibility Dashboard** | [`02-wav-accessibility/`](dashboards/02-wav-accessibility/README.md) | Доступные для колясок поездки (WAV/AAR) — доля, ожидание, экономика | [@annamyaktinova](https://github.com/annamyaktinova) | [README.md](dashboards/02-wav-accessibility/README.md) |
-| 11 | **Совместные поездки (Shared rides)** | [`03-shared-rides/`](dashboards/03-shared-rides/README.md) | Шеринг Uber/Lyft: кто чаще матчится, когда, где | [@SigmaMalia](https://github.com/SigmaMalia) | [README.md](dashboards/03-shared-rides/README.md) |
+| 1 | **NYC FHVHV Taxi Overview** (основной дашборд репозитория) | [`01-overview-competition/`](dashboards/01-overview-competition/README.md) | Объем поездок, выручка, комиссия, гео-экономика | [@yemtsovaanna-alt](https://github.com/yemtsovaanna-alt) | [README.md](dashboards/01-overview-competition/README.md) |
+| 2 | **Uber vs Lyft: Competition Overview** | [`01-overview-competition/`](dashboards/01-overview-competition/README.md) | Прямое сравнение Uber/Lyft: бронирования, типы поездок, ожидание, surge | [@yemtsovaanna-alt](https://github.com/yemtsovaanna-alt) | [README.md](dashboards/01-overview-competition/README.md) |
+| 3 | **NYC Taxi — Обзор** (home раздела) | [`02-nyc-taxi-suite/`](dashboards/02-nyc-taxi-suite/README.md) | North Star/Guardrail метрики одним взглядом | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/02-nyc-taxi-suite/README.md#00-home) |
+| 4 | **NYC Taxi — Данные и продуктовые метрики** | [`02-nyc-taxi-suite/`](dashboards/02-nyc-taxi-suite/README.md) | North Star/Guardrail/Proxy метрики по годам | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/02-nyc-taxi-suite/README.md#01-data-metrics) |
+| 5 | **NYC Taxi — Погода, метро, congestion pricing** | [`02-nyc-taxi-suite/`](dashboards/02-nyc-taxi-suite/README.md) | Дождь/температура/метро vs спрос, эффект платного въезда в Manhattan CBD | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/02-nyc-taxi-suite/README.md#02-weather-metro) |
+| 6 | **NYC Taxi — Спрос, цена, прогноз** | [`02-nyc-taxi-suite/`](dashboards/02-nyc-taxi-suite/README.md) | Ожидание по зонам/часам, точность прогноза спроса, эластичность цены | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/02-nyc-taxi-suite/README.md#03-demand-price) |
+| 7 | **NYC Taxi — Эффект COVID по типам такси** | [`02-nyc-taxi-suite/`](dashboards/02-nyc-taxi-suite/README.md) | Падение и восстановление по типам такси/округам/агрегаторам, 2019=100 | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/02-nyc-taxi-suite/README.md#04-covid) |
+| 8 | **NYC Taxi — Конкуренция агрегаторов и зоны доминирования** | [`02-nyc-taxi-suite/`](dashboards/02-nyc-taxi-suite/README.md) | Доли рынка Uber/Lyft/Via/Juno по времени, округам, зонам | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/02-nyc-taxi-suite/README.md#05-aggregators) |
+| 9 | **NYC Taxi — Мероприятия и спрос на такси** | [`02-nyc-taxi-suite/`](dashboards/02-nyc-taxi-suite/README.md) | Всплеск спроса вокруг концертов/матчей, DoWhy-причинность | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/02-nyc-taxi-suite/README.md#06-events) |
+| 10 | **WAV/Accessibility Dashboard** | [`03-wav-accessibility/`](dashboards/03-wav-accessibility/README.md) | Доступные для колясок поездки (WAV/AAR) — доля, ожидание, экономика | [@annamyaktinova](https://github.com/annamyaktinova) | [README.md](dashboards/03-wav-accessibility/README.md) |
+| 11 | **Совместные поездки (Shared rides)** | [`04-shared-rides/`](dashboards/04-shared-rides/README.md) | Шеринг Uber/Lyft: кто чаще матчится, когда, где | [@SigmaMalia](https://github.com/SigmaMalia) | [README.md](dashboards/04-shared-rides/README.md) |
 
 ### Что из этого реально живет в репозитории
 
@@ -36,7 +36,7 @@ Yellow/Green/FHV/FHVHV (такси и Uber/Lyft/Via/Juno) — за 2019–2026. 
 | Дашборды | Что здесь есть |
 |---|---|
 | 1–2 (NYC FHVHV Overview, Uber vs Lyft) | Только скриншоты/видео готового результата и техническая справка о его устройстве. Сами дашборды строит отдельный проект-побратим `taxi_data_2025_2026` (свой DuckDB→Postgres ETL), который в этом репозитории не хранится целиком |
-| 3–9 (`01-nyc-taxi-suite`) | Полностью: репозиторий сам генерирует и провижнит живой Grafana-инстанс (`dashboards/01-nyc-taxi-suite/grafana_provisioning/`) |
+| 3–9 (`02-nyc-taxi-suite`) | Полностью: репозиторий сам генерирует и провижнит живой Grafana-инстанс (`dashboards/02-nyc-taxi-suite/grafana_provisioning/`) |
 | 10–11 (WAV, Shared rides) | Витрины и ноутбуки, которыми дашборд обоснован, — здесь. Сама Grafana-панель как JSON не экспортирована; посмотреть, как она выглядит, — по видео/описанию в README раздела |
 
 ## Структура репозитория
@@ -47,10 +47,10 @@ Yellow/Green/FHV/FHVHV (такси и Uber/Lyft/Via/Juno) — за 2019–2026. 
   CODEOWNERS                — обязательные ревьюверы по разделам
   PULL_REQUEST_TEMPLATE.md  — шаблон PR (обязательная ссылка на Issue)
 dashboards/
-  01-nyc-taxi-suite/        — основной трек: 7 Grafana-дашбордов (было NYC/)
-  02-wav-accessibility/     — доступность поездок WAV/AAR (было wav/)
-  03-shared-rides/          — совместные поездки Uber/Lyft (было Sharing/)
-  04-overview-competition/  — скрины/видео 2 дашбордов проекта-побратима (было Overview+Competition/)
+  02-nyc-taxi-suite/        — основной трек: 7 Grafana-дашбордов (было NYC/)
+  03-wav-accessibility/     — доступность поездок WAV/AAR (было wav/)
+  04-shared-rides/          — совместные поездки Uber/Lyft (было Sharing/)
+  01-overview-competition/  — скрины/видео 2 дашбордов проекта-побратима (было Overview+Competition/)
 branches.yaml                — политика branch protection для main (декларативно)
 review.yaml                  — политика ревью: сколько approve, кто за какой раздел
 CONTRIBUTING.md              — процесс разработки: ветки, ревью, CI, связь PR ↔ Issue
@@ -59,10 +59,10 @@ README.md                    — этот файл, навигатор по вс
 
 | Папка | Что внутри |
 |---|---|
-| [`dashboards/01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Основной трек: очистка сырых TLC-данных → ~20 витрин в Postgres → 7 Grafana-дашбордов, причинные HTML-отчеты, кастомная карта зон, слайды |
-| [`dashboards/02-wav-accessibility/`](dashboards/02-wav-accessibility/README.md) | Отдельный трек: доступность поездок для инвалидных колясок (WAV/AAR) — витрины, ноутбуки с проверкой гипотез, запись дашборда |
-| [`dashboards/03-shared-rides/`](dashboards/03-shared-rides/README.md) | Отдельный трек: совместные поездки (shared rides) Uber/Lyft — один скрипт-пайплайн, 3 витрины, 3 проверенные гипотезы |
-| [`dashboards/04-overview-competition/`](dashboards/04-overview-competition/README.md) | Скриншоты/видео + техническая справка (`GITHUB_HANDOFF.md`) по двум дашбордам из соседнего проекта (`taxi_data_2025_2026`) |
+| [`dashboards/02-nyc-taxi-suite/`](dashboards/02-nyc-taxi-suite/README.md) | Основной трек: очистка сырых TLC-данных → ~20 витрин в Postgres → 7 Grafana-дашбордов, причинные HTML-отчеты, кастомная карта зон, слайды |
+| [`dashboards/03-wav-accessibility/`](dashboards/03-wav-accessibility/README.md) | Отдельный трек: доступность поездок для инвалидных колясок (WAV/AAR) — витрины, ноутбуки с проверкой гипотез, запись дашборда |
+| [`dashboards/04-shared-rides/`](dashboards/04-shared-rides/README.md) | Отдельный трек: совместные поездки (shared rides) Uber/Lyft — один скрипт-пайплайн, 3 витрины, 3 проверенные гипотезы |
+| [`dashboards/01-overview-competition/`](dashboards/01-overview-competition/README.md) | Скриншоты/видео + техническая справка (`GITHUB_HANDOFF.md`) по двум дашбордам из соседнего проекта (`taxi_data_2025_2026`) |
 
 ### Сквозной пайплайн
 
@@ -73,7 +73,7 @@ README.md                    — этот файл, навигатор по вс
 ```
 
 Витрины нужны потому, что сырых поездок — сотни миллионов (327M yellow, 1.6B fhvhv и
-т.д., см. [`DATA_CLEANING_LOG.md`](dashboards/01-nyc-taxi-suite/DATA_CLEANING_LOG.md)) —
+т.д., см. [`DATA_CLEANING_LOG.md`](dashboards/02-nyc-taxi-suite/DATA_CLEANING_LOG.md)) —
 слишком много, чтобы строить интерактивные панели напрямую по ним. Каждая витрина —
 заранее посчитанный агрегат по дню/месяцу/часу/зоне.
 

@@ -7,6 +7,7 @@
 ## Данные
 
 - **Источник:** TLC Trip Record Data, FHVHV tripdata (`archive/fhvhv_tripdata_*.parquet`), период **2025-01 … 2026-04** (16 месяцев, ~324 млн строк после очистки).
+  Сырые parquet: [Яндекс.Диск](https://disk.yandex.ru/d/p1YAHtu15H2tlA).
 - **Провайдеры:** Uber (`HV0003`) и Lyft (`HV0005`).
 - **Справочник зон:** `taxi_zone_lookup.csv`.
 - Ключевые поля: `shared_request_flag` (запрос шеринга) и `shared_match_flag` (факт нахождения пары).

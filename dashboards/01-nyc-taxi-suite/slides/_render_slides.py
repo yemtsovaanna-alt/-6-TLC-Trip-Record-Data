@@ -105,8 +105,8 @@ slide_weather = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{CSS
   <div class="eyebrow">NYC Taxi · аналитика</div>
   <h1>Карта города и погода: где дождь реально двигает спрос</h1>
   <p class="lead">Дождь поднимает поездки на <strong class="accent">+1.44% на 10&nbsp;мм</strong> по городу —
-  но эффект живёт рядом с метро и почти исчезает на Статен-Айленде.
-  Congestion pricing с янв.&nbsp;2025 бьёт только по Манхэттену.</p>
+  но эффект живет рядом с метро и почти исчезает на Статен-Айленде.
+  Congestion pricing с янв.&nbsp;2025 бьет только по Манхэттену.</p>
 
   <div class="kpi-row">
     <div class="kpi"><div class="num">+2.11%</div><div class="lbl">Manhattan · эффект дождя на 10&nbsp;мм<br>(p&nbsp;&lt;&nbsp;0.001)</div></div>
@@ -122,7 +122,7 @@ slide_weather = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{CSS
     </div>
     <div class="card">
       <h2>Congestion pricing · YoY</h2>
-      <div class="sub">Объём поездок год к году · только Manhattan падает</div>
+      <div class="sub">Объем поездок год к году · только Manhattan падает</div>
       {cong_bars}
       <div style="margin-top:28px">
         <h2>Дождь × доступность метро</h2>
@@ -143,7 +143,7 @@ slide_events = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{CSS}
   <div class="eyebrow">NYC Taxi · мероприятия</div>
   <h1>События города → всплески такси вокруг площадок</h1>
   <p class="lead">На <strong>{avg['n']:,}</strong> событиях (NFL/NBA/MLB/MLS/концерты/парады)
-  медианный <strong class="accent">разъезд после</strong> даёт
+  медианный <strong class="accent">разъезд после</strong> дает
   <strong class="accent">+{avg['post']}%</strong> pickups к обычной базе того же часа и дня недели;
   приезд до старта — <strong>+{avg['pre']}%</strong>.</p>
 

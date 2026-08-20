@@ -37,7 +37,7 @@
       },
       "options": {
         "mode": "markdown",
-        "content": "## Спрос, цена и ожидание подачи\n\nФильтры сверху: **округ**, **тип покрытия** (dominant taxi type), **агрегатор** (Uber/Lyft), **кластер**.\nWait считается только по FHVHV (`request→pickup`); yellow/green timestamp запроса не отдают.\nНа карте чекбоксы покрытия гасят чужие зоны; wait внутри — всё равно FHVHV."
+        "content": "## Спрос, цена и ожидание подачи\n\nФильтры сверху: **округ**, **тип покрытия** (dominant taxi type), **агрегатор** (Uber/Lyft), **кластер**.\nWait считается только по FHVHV (`request→pickup`); yellow/green timestamp запроса не отдают.\nНа карте чекбоксы покрытия гасят чужие зоны; wait внутри — все равно FHVHV."
       },
       "transparent": false
     },

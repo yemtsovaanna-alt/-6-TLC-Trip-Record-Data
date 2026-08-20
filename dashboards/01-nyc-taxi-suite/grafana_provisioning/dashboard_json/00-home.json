@@ -37,7 +37,7 @@
       },
       "options": {
         "mode": "markdown",
-        "content": "## NYC Taxi — обзор\n\nМетрики без агрегатора: `#9BACD8` → `#F98513` · Uber `#06C167` · Lyft `#FF00BF` · wait: FHVHV 2024.\n\n| Доска | О чём |\n|-------|--------|\n| [Метрики](/d/nyc-taxi-data-metrics) | North Star, wait, оплата водителя |\n| [Погода / метро](/d/nyc-taxi-weather-metro) | Дождь, congestion pricing |\n| [Спрос / wait-карта](/d/nyc-taxi-demand-price) | Карта зон, теплокарты ожидания, фильтры |\n| [COVID](/d/nyc-taxi-covid) | Восстановление + почему green не ожил |\n| [Агрегаторы](/d/nyc-taxi-aggregators) | Uber vs Lyft, зоны доминирования |\n| [Мероприятия](/d/nyc-taxi-events) | NFL, NBA, MLB, марафон → всплески такси |\n\nKPI ниже — последний год + стрелка год-к-году (сравнение с предыдущим годом в ряду)."
+        "content": "## NYC Taxi — обзор\n\nМетрики без агрегатора: `#9BACD8` → `#F98513` · Uber `#06C167` · Lyft `#FF00BF` · wait: FHVHV 2024.\n\n| Доска | О чем |\n|-------|--------|\n| [Метрики](/d/nyc-taxi-data-metrics) | North Star, wait, оплата водителя |\n| [Погода / метро](/d/nyc-taxi-weather-metro) | Дождь, congestion pricing |\n| [Спрос / wait-карта](/d/nyc-taxi-demand-price) | Карта зон, теплокарты ожидания, фильтры |\n| [COVID](/d/nyc-taxi-covid) | Восстановление + почему green не ожил |\n| [Агрегаторы](/d/nyc-taxi-aggregators) | Uber vs Lyft, зоны доминирования |\n| [Мероприятия](/d/nyc-taxi-events) | NFL, NBA, MLB, марафон → всплески такси |\n\nKPI ниже — последний год + стрелка год-к-году (сравнение с предыдущим годом в ряду)."
       },
       "transparent": false
     },

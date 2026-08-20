@@ -28,13 +28,15 @@ Yellow/Green/FHV/FHVHV (такси и Uber/Lyft/Via/Juno) — за 2019–2026. 
 | 10 | **NYC FHVHV Taxi Overview** | [`04-overview-competition/`](dashboards/04-overview-competition/README.md) | Объем поездок, выручка, комиссия, гео-экономика | [README.md](dashboards/04-overview-competition/README.md) |
 | 11 | **Uber vs Lyft: Competition Overview** | [`04-overview-competition/`](dashboards/04-overview-competition/README.md) | Прямое сравнение Uber/Lyft: бронирования, типы поездок, ожидание, surge | [README.md](dashboards/04-overview-competition/README.md) |
 
-Дашборды 1–7 — один живой Grafana-инстанс (`dashboards/01-nyc-taxi-suite/grafana_provisioning/`),
-сгенерированный и провижнящийся из этого репозитория. Дашборды 8–9 (WAV, Shared rides) —
-витрины и ноутбуки лежат здесь же, сама Grafana-панель к ним не экспортирована (см.
-видео/описание в соответствующих разделах). Дашборды 10–11 — это **отдельный
-проект-побратим** (`taxi_data_2025_2026`, свой DuckDB→Postgres ETL, не хранится в этом
-репо целиком) — здесь лежат только скриншоты/видео финального результата и техническая
-справка о нем.
+### Что из этого реально живет в репозитории
+
+Не все 11 дашбордов представлены здесь одинаково полно:
+
+| Дашборды | Что здесь есть |
+|---|---|
+| 1–7 (`01-nyc-taxi-suite`) | Полностью: репозиторий сам генерирует и провижнит живой Grafana-инстанс (`dashboards/01-nyc-taxi-suite/grafana_provisioning/`) |
+| 8–9 (WAV, Shared rides) | Витрины и ноутбуки, которыми дашборд обоснован, — здесь. Сама Grafana-панель как JSON не экспортирована; посмотреть, как она выглядит, — по видео/описанию в README раздела |
+| 10–11 (NYC FHVHV Overview, Uber vs Lyft) | Только скриншоты/видео готового результата и техническая справка о его устройстве. Сами дашборды строит отдельный проект-побратим `taxi_data_2025_2026` (свой DuckDB→Postgres ETL), который в этом репозитории не хранится целиком |
 
 ## Структура репозитория
 

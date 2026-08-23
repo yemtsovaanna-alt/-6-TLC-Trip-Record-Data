@@ -1,23 +1,11 @@
-﻿# Secrets
-.env
-.env.*
-credentials.json
-*.pem
-
-# Python / caches
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ipynb_checkpoints/
-cache/
-osmnx_cache/
-.tmp/
-.claude/
-
-# Large local TLC / OSM datasets (exceed GitHub limits)
+# Local bulk data (not for GitHub)
 TLC_Trip_Data/
 TLC_Trip_Data_clean/
-NewYork.osm.pbf
-nyc_road_graph.gpickle
 *.parquet
+*.pbf
+*.gpickle
+osmnx_cache/
+cache/
+.tmp/
+__pycache__/
+.claude/

@@ -1,0 +1,774 @@
+{
+  "id": null,
+  "uid": "nyc-taxi-events",
+  "title": "NYC Taxi — Мероприятия и спрос на такси",
+  "tags": [
+    "nyc-taxi"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 40,
+  "version": 6,
+  "refresh": "",
+  "time": {
+    "from": "now-7y",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 0,
+      "title": "",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 5
+      },
+      "type": "text",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "## Как массовые мероприятия влияют на такси?\n\n**Метод:** для каждого события сравниваем поездки FHVHV (Uber/Lyft) в зонах стадиона/арены\nс **базой того же дня недели и тех же часов** в дни без событий.\n\n| Окно | Что меряем | Интерпретация |\n|------|------------|---------------|\n| **−2…0 ч** до начала | dropoff в зону | **Приезд** зрителей |\n| **0…+3 ч** | pickup + dropoff | **Во время** события |\n| **+3…+5 ч** после | pickup из зоны | **Разъезд** после финала |\n\n**Гипотеза (DoWhy):** чем **дороже** (`price_tier`) и чем **дальше от метро** (`log_dist_m`),\nтем сильнее разъезд на такси. Полный отчёт: `reports/nyc_event_taxi_dowhy.html`.\n\n**Источники событий:** NFL/NBA/MLB/MLS (расписания), концерты (MSG/Barclays/Yankee/Citi),\nпарады и перекрытия (Thanksgiving, St Patrick's, NYE, Pride).\n\n**Карта:** режим **«События ▶»** → площадка → таймлапс pickup/час с авто-зумом."
+      },
+      "transparent": false
+    },
+    {
+      "id": 30,
+      "title": "DoWhy: dist→lift (ATE pp/ln m)",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 6,
+        "h": 4
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT round(ate::numeric, 2) FROM event_dowhy_results WHERE model='dist_to_metro'",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#9BACD8"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 31,
+      "title": "DoWhy p-value (dist)",
+      "gridPos": {
+        "x": 6,
+        "y": 5,
+        "w": 6,
+        "h": 4
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT round(p_value::numeric, 4) FROM event_dowhy_results WHERE model='dist_to_metro'",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#9BACD8"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 32,
+      "title": "DoWhy: price tier→lift",
+      "gridPos": {
+        "x": 12,
+        "y": 5,
+        "w": 6,
+        "h": 4
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT round(ate::numeric, 2) FROM event_dowhy_results WHERE model='price_tier'",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "percent",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 33,
+      "title": "DoWhy p-value (price)",
+      "gridPos": {
+        "x": 18,
+        "y": 5,
+        "w": 6,
+        "h": 4
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT round(p_value::numeric, 4) FROM event_dowhy_results WHERE model='price_tier'",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 1,
+      "title": "Таймлапс событий: lift pickup (режим «События ▶»)",
+      "gridPos": {
+        "x": 0,
+        "y": 9,
+        "w": 24,
+        "h": 16
+      },
+      "type": "text",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "mode": "html",
+        "content": "<iframe src=\"public/nyc_map/index.html?v=1787508729\" style=\"width:100%;height:100%;border:0;\" title=\"Таймлапс событий: lift pickup (режим «События ▶»)\"></iframe>"
+      },
+      "transparent": false
+    },
+    {
+      "id": 1,
+      "title": "Средний всплеск разъезда (post PU)",
+      "gridPos": {
+        "x": 0,
+        "y": 25,
+        "w": 6,
+        "h": 4
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT round(avg(post_pu_lift_pct)::numeric, 1) FROM event_impact WHERE event_type IN (${event_type:sqlstring})",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "percent",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Средний всплеск приезда (pre DO)",
+      "gridPos": {
+        "x": 6,
+        "y": 25,
+        "w": 6,
+        "h": 4
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT round(avg(pre_do_lift_pct)::numeric, 1) FROM event_impact WHERE event_type IN (${event_type:sqlstring})",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "percent",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#9BACD8"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Событий в выборке",
+      "gridPos": {
+        "x": 12,
+        "y": 25,
+        "w": 6,
+        "h": 4
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT count(*) FROM event_impact WHERE event_type IN (${event_type:sqlstring})",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#9BACD8"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 4,
+      "title": "ρ: price_tier → разъезд",
+      "gridPos": {
+        "x": 18,
+        "y": 25,
+        "w": 6,
+        "h": 4
+      },
+      "type": "stat",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT round(corr(price_tier, post_pu_lift_pct)::numeric, 2) FROM event_hypothesis",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 10,
+      "title": "Гипотеза: разъезд vs price tier (медиана по площадке)",
+      "gridPos": {
+        "x": 0,
+        "y": 29,
+        "w": 12,
+        "h": 9
+      },
+      "type": "barchart",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT price_tier::text AS tier, round((percentile_cont(0.5) WITHIN GROUP (ORDER BY post_pu_lift))::numeric, 1) AS post_pu_lift FROM event_hypothesis_venue GROUP BY price_tier ORDER BY price_tier",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "xTickLabelRotation": 0
+      }
+    },
+    {
+      "id": 11,
+      "title": "Гипотеза: разъезд vs расстояние до метро (по площадкам)",
+      "gridPos": {
+        "x": 12,
+        "y": 29,
+        "w": 12,
+        "h": 9
+      },
+      "type": "barchart",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT name, post_pu_lift FROM event_hypothesis_venue ORDER BY dist_to_subway_m DESC",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "xTickLabelRotation": 0
+      }
+    },
+    {
+      "id": 12,
+      "title": "Всплеск разъезда после события по типу (медиана, % к базе)",
+      "gridPos": {
+        "x": 0,
+        "y": 38,
+        "w": 12,
+        "h": 9
+      },
+      "type": "barchart",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT event_type, round((percentile_cont(0.5) WITHIN GROUP (ORDER BY post_pu_lift_pct))::numeric, 1) AS post_pu_lift FROM event_impact GROUP BY event_type ORDER BY post_pu_lift DESC",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "xTickLabelRotation": 0
+      }
+    },
+    {
+      "id": 13,
+      "title": "Всплеск приезда до события по типу (медиана, % к базе)",
+      "gridPos": {
+        "x": 12,
+        "y": 38,
+        "w": 12,
+        "h": 9
+      },
+      "type": "barchart",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT event_type, round((percentile_cont(0.5) WITHIN GROUP (ORDER BY pre_do_lift_pct))::numeric, 1) AS pre_do_lift FROM event_impact GROUP BY event_type ORDER BY pre_do_lift DESC",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "xTickLabelRotation": 0
+      }
+    },
+    {
+      "id": 20,
+      "title": "Разъезд после события: топ-20 (post PU lift, %)",
+      "gridPos": {
+        "x": 0,
+        "y": 47,
+        "w": 24,
+        "h": 10
+      },
+      "type": "barchart",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT left(title, 40) || ' (' || date::text || ')' AS event, post_pu_lift_pct AS lift_pct FROM event_impact WHERE event_type IN (${event_type:sqlstring}) ORDER BY post_pu_lift_pct DESC LIMIT 20",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#F98513"
+          },
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "xTickLabelRotation": 0
+      }
+    },
+    {
+      "id": 21,
+      "title": "Топ событий + гипотеза (price tier, метро)",
+      "gridPos": {
+        "x": 0,
+        "y": 57,
+        "w": 24,
+        "h": 12
+      },
+      "type": "table",
+      "datasource": {
+        "type": "postgres",
+        "uid": "nyc_taxi_pg"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "nyc_taxi_pg"
+          },
+          "rawSql": "SELECT h.date, h.event_type, h.title, h.venue_name, h.price_tier, round(h.dist_to_subway_m::numeric, 0) AS metro_m, h.pre_do_lift_pct AS \"приезд %\", h.post_pu_lift_pct AS \"разъезд %\" FROM event_hypothesis h WHERE h.event_type IN (${event_type:sqlstring}) ORDER BY h.post_pu_lift_pct DESC LIMIT 30",
+          "rawQuery": true,
+          "format": "table",
+          "refId": "A",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "options": {}
+    }
+  ],
+  "links": [
+    {
+      "type": "dashboards",
+      "asDropdown": true,
+      "title": "NYC Taxi",
+      "keepTime": true,
+      "includeVars": true,
+      "targetBlank": false
+    }
+  ],
+  "editable": true,
+  "annotations": {
+    "list": [
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "nyc_taxi_pg"
+        },
+        "enable": false,
+        "iconColor": "red",
+        "name": "Ключевые события",
+        "target": {
+          "rawSql": "SELECT event_time AS \"time\", title AS text, tags FROM dashboard_events ORDER BY 1",
+          "format": "table"
+        },
+        "mappings": {}
+      }
+    ]
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "event_type",
+        "label": "Тип события",
+        "type": "query",
+        "datasource": {
+          "type": "postgres",
+          "uid": "nyc_taxi_pg"
+        },
+        "query": "SELECT DISTINCT event_type FROM event_impact ORDER BY 1",
+        "definition": "SELECT DISTINCT event_type FROM event_impact ORDER BY 1",
+        "refresh": 1,
+        "multi": true,
+        "includeAll": true,
+        "current": {},
+        "sort": 1
+      }
+    ]
+  }
+}

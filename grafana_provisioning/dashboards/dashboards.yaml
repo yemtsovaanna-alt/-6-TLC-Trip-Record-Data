@@ -1,0 +1,13 @@
+apiVersion: 1
+
+providers:
+  - name: 'NYC Taxi'
+    orgId: 1
+    folder: 'NYC Taxi'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      path: C:\Program Files\GrafanaLabs\grafana\conf\provisioning\dashboard_json
+      foldersFromFilesStructure: false

@@ -1,0 +1,245 @@
+<meta charset="utf-8">
+<title>Погода → поездки: причинный анализ (DoWhy)</title>
+<style>
+:root {
+  --bg: #f5f6f4; --surface: #ffffff; --surface-2: #ebeee9; --border: #d9ddd4;
+  --text: #191d16; --text-muted: #656e5e; --accent: #3a6b4a; --accent-soft: rgba(58,107,74,0.10);
+  --sig: #3a6b4a; --nosig: #b7bcae; --warn: #a3453a; --warn-soft: rgba(163,69,58,0.08);
+  --purple: #6a5aa8; --purple-soft: rgba(106,90,168,0.10);
+  --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  --font-body: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12140f; --surface: #191c15; --surface-2: #21251b; --border: #333a29;
+    --text: #e9ece2; --text-muted: #9aa38c; --accent: #6bc98a; --accent-soft: rgba(107,201,138,0.14);
+    --sig: #6bc98a; --nosig: #454d3c; --warn: #e0847a; --warn-soft: rgba(224,132,122,0.12);
+    --purple: #a99bde; --purple-soft: rgba(169,155,222,0.14);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12140f; --surface: #191c15; --surface-2: #21251b; --border: #333a29;
+  --text: #e9ece2; --text-muted: #9aa38c; --accent: #6bc98a; --accent-soft: rgba(107,201,138,0.14);
+  --sig: #6bc98a; --nosig: #454d3c; --warn: #e0847a; --warn-soft: rgba(224,132,122,0.12);
+  --purple: #a99bde; --purple-soft: rgba(169,155,222,0.14);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 15.5px; line-height: 1.6; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 80px; }
+.eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(26px,3.6vw,38px); margin: 6px 0 10px; text-wrap: balance; }
+.lede { color: var(--text-muted); max-width: 70ch; font-size: 16px; }
+.lede b { color: var(--text); }
+h2 { font-family: var(--font-display); font-weight: 600; font-size: 22px; margin: 40px 0 6px; }
+.section-tag { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 9px; border-radius: 999px; font-weight: 700; display: inline-block; margin-bottom: 8px; }
+.section-tag.p1 { color: var(--accent); background: var(--accent-soft); }
+.section-tag.p2 { color: var(--purple); background: var(--purple-soft); }
+.section-tag.p3 { color: var(--warn); background: var(--warn-soft); }
+p.sub { color: var(--text-muted); font-size: 13.5px; max-width: 70ch; margin: 0 0 18px; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-bottom: 16px; }
+.bar-row { display: grid; grid-template-columns: 160px 1fr 130px; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--border); font-size: 13.5px; }
+.bar-row:last-child { border-bottom: none; }
+.bar-row.city { font-weight: 700; }
+.bar-track { height: 10px; background: var(--surface-2); border-radius: 5px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 5px; }
+.bar-fill.sig { background: var(--sig); }
+.bar-fill.nosig { background: var(--nosig); }
+.bar-val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; font-size: 12px; color: var(--text-muted); }
+.bar-val i { font-style: normal; opacity: 0.75; }
+.legend-note { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+.legend-note .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+.legend-note .dot.sig { background: var(--sig); }
+.legend-note .dot.nosig { background: var(--nosig); }
+
+.refute-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
+@media (max-width: 640px) { .refute-grid, .chain-grid, .yoy-grid { grid-template-columns: 1fr; } }
+.refute { background: var(--surface-2); border-radius: 10px; padding: 12px 14px; }
+.refute-h { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+.refute-v { font-family: var(--font-mono); font-weight: 700; font-size: 15px; margin-top: 3px; }
+.refute-ok { color: var(--sig); }
+
+.finding { border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 14px; padding: 22px 24px; margin: 16px 0; }
+.finding.purple { border-color: var(--purple); background: var(--purple-soft); }
+.finding.warn { border-color: var(--warn); background: var(--warn-soft); }
+.finding h3 { font-family: var(--font-display); margin: 0 0 8px; font-size: 19px; }
+.coef-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
+.coef-table th { text-align: left; font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+.coef-table td { padding: 7px 8px; border-bottom: 1px dashed var(--border); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.coef-table td.rowlabel { font-family: var(--font-body); }
+.coef-table td.sig-yes { color: var(--sig); font-weight: 700; }
+.coef-table td.sig-no { color: var(--text-muted); }
+
+.chain { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 16px 0; font-family: var(--font-mono); font-size: 13px; flex-wrap: wrap; }
+.chain-node { background: var(--surface-2); border-radius: 8px; padding: 8px 14px; text-align: center; }
+.chain-arrow { color: var(--text-muted); font-size: 16px; }
+.chain-coef { font-size: 11px; color: var(--text-muted); display: block; margin-top: 2px; }
+
+.yoy-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 14px 0; }
+.yoy-card { background: var(--surface-2); border-radius: 10px; padding: 12px 14px; text-align: center; }
+.yoy-card.hi { outline: 2px solid var(--warn); }
+.yoy-borough { font-size: 12px; color: var(--text-muted); }
+.yoy-val { font-family: var(--font-mono); font-weight: 700; font-size: 20px; margin-top: 4px; }
+.yoy-val.neg { color: var(--warn); }
+.yoy-val.pos { color: var(--sig); }
+
+.crz-chart { display: flex; align-items: flex-end; gap: 3px; height: 60px; margin: 16px 0 4px; }
+.crz-bar { flex: 1; background: var(--purple); border-radius: 2px 2px 0 0; opacity: 0.8; }
+.crz-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); }
+
+.caveat { border: 1px solid var(--warn); background: var(--warn-soft); border-radius: 12px; padding: 16px 18px; font-size: 13.5px; margin-top: 14px; }
+.caveat b { color: var(--warn); }
+
+footer { margin-top: 32px; color: var(--text-muted); font-size: 12px; font-family: var(--font-mono); }
+</style>
+
+<div class="wrap">
+  <span class="eyebrow">TLC Trip Data × NOAA GHCN × MTA Open Data 2019&ndash;2026 · DoWhy causal analysis</span>
+  <h1>Погода, метро и congestion pricing: что двигает спрос на такси в Нью-Йорке</h1>
+  <p class="lede">Три причинных вопроса на одном датасете: (1) влияет ли дождь на поездки, по городу и округам,
+  (2) идёт ли этот эффект через отток с метро, (3) что сделало с манхэттенским такси-спросом введение платного въезда
+  в январе 2025.</p>
+
+  <span class="section-tag p1">1 / Погода</span>
+  <h2>Эффект осадков по округам</h2>
+  <p class="sub">Прирост числа поездок на каждые 10мм осадков в сутки, после поправки на день недели, месяц, год и температуру/ветер/снег
+  (backdoor-регрессия DoWhy на log(поездки), 2609 дней). Наивная корреляция Пирсона для города всего +0.01 &mdash; эффект виден только после поправки на календарь.</p>
+  <div class="card">
+    <div class="bar-row">
+      <span class="bar-label">Manhattan</span>
+      <div class="bar-track"><div class="bar-fill sig" style="width:100.0%"></div></div>
+      <span class="bar-val">+2.11% <i>p=0.0001</i></span>
+    </div>
+<div class="bar-row">
+      <span class="bar-label">Brooklyn</span>
+      <div class="bar-track"><div class="bar-fill sig" style="width:68.3%"></div></div>
+      <span class="bar-val">+1.44% <i>p=0.0000</i></span>
+    </div>
+<div class="bar-row city">
+      <span class="bar-label">Citywide (all boroughs)</span>
+      <div class="bar-track"><div class="bar-fill sig" style="width:68.2%"></div></div>
+      <span class="bar-val">+1.44% <i>p=0.0002</i></span>
+    </div>
+<div class="bar-row">
+      <span class="bar-label">Queens</span>
+      <div class="bar-track"><div class="bar-fill sig" style="width:42.2%"></div></div>
+      <span class="bar-val">+0.89% <i>p=0.0172</i></span>
+    </div>
+<div class="bar-row">
+      <span class="bar-label">Bronx</span>
+      <div class="bar-track"><div class="bar-fill sig" style="width:23.0%"></div></div>
+      <span class="bar-val">+0.48% <i>p=0.0461</i></span>
+    </div>
+<div class="bar-row">
+      <span class="bar-label">Staten Island</span>
+      <div class="bar-track"><div class="bar-fill nosig" style="width:11.0%"></div></div>
+      <span class="bar-val">+0.23% <i>p=0.4620</i></span>
+    </div>
+    <div class="legend-note"><span class="dot sig"></span>статистически значимо (p&lt;0.05) &nbsp;&nbsp; <span class="dot nosig"></span>не значимо</div>
+  </div>
+  <p class="sub"><b style="color:var(--text)">Продуктовый инсайт:</b> эффект сильнее всего в Манхэттене (+2.11%) и слабее всего
+  на Статен-Айленде (+0.23%, не значим) &mdash; в порядке убывания плотности/пешеходности округа и роста доли личных автомобилей.</p>
+
+  <div class="card">
+    <div class="refute-grid">
+      <div class="refute"><div class="refute-h">Placebo treatment</div>
+        <div class="refute-v refute-ok">&minus;0.0000161</div>
+        <div class="sub" style="margin:4px 0 0">эффект &rarr; ~0 при перемешанных осадках (ок)</div></div>
+      <div class="refute"><div class="refute-h">Data subset 80%</div>
+        <div class="refute-v refute-ok">+0.001432</div>
+        <div class="sub" style="margin:4px 0 0">почти не отличается от исходных +0.00143</div></div>
+      <div class="refute"><div class="refute-h">Unobserved confounder</div>
+        <div class="refute-v">н/д</div>
+        <div class="sub" style="margin:4px 0 0">тест не выполнился (баг dowhy 0.8)</div></div>
+    </div>
+  </div>
+
+  <div class="finding">
+    <h3>Погода или прогноз погоды?</h3>
+    <p class="sub" style="margin-bottom:12px">Архивных прогнозов нет &mdash; проверяем прокси: связана ли сбывшаяся погода <b>завтрашнего</b> дня
+    с ценой сегодня сверх того, что объясняется погодой сегодня/вчера (косвенный след решения по прогнозу).</p>
+    <table class="coef-table">
+      <tr><th>Тариф за милю ($)</th><th>Коэффициент</th><th>p-value</th><th></th></tr>
+      <tr><td class="rowlabel">Осадки <b>сегодня</b></td><td>+0.00683</td><td>4.28e-07</td><td class="sig-yes">значимо</td></tr>
+      <tr><td class="rowlabel">Осадки <b>завтра</b> (прокси прогноза)</td><td>+0.00004</td><td>0.975</td><td class="sig-no">не значимо</td></tr>
+    </table>
+    <p style="margin:14px 0 0; font-size:13.5px;">Тариф растёт вместе с <b>сегодняшним</b> дождём (p&lt;0.001, surge-реакция на факт), но коэффициент
+    при <b>завтрашних</b> осадках практически нулевой (p=0.98) &mdash; нет статистического следа
+    того, что цена закладывает прогноз заранее.</p>
+  </div>
+
+  <span class="section-tag p2">2 / Метро</span>
+  <h2>Идёт ли эффект дождя через отток с метро?</h2>
+  <p class="sub">Citywide, 2258 дней (2020-03 &mdash; 2026-06, пересечение архива такси и данных MTA). Гипотеза: дождь &rarr; меньше метро &rarr; больше такси.</p>
+  <div class="chain">
+    <div class="chain-node">Осадки<span class="chain-coef">&nbsp;</span></div>
+    <span class="chain-arrow">&rarr;</span>
+    <div class="chain-node" style="border:1px solid var(--purple)">Метро (log)<span class="chain-coef">-0.0018, p=0.0002</span></div>
+    <span class="chain-arrow">&rarr;</span>
+    <div class="chain-node">Такси (log)<span class="chain-coef">&nbsp;</span></div>
+  </div>
+  <div class="card">
+    <div class="refute-grid">
+      <div class="refute"><div class="refute-h">Дождь &rarr; метро</div>
+        <div class="refute-v" style="color:var(--warn)">&minus;1.80%</div>
+        <div class="sub" style="margin:4px 0 0">меньше пассажиров метро на 10мм дождя, p&lt;0.001</div></div>
+      <div class="refute"><div class="refute-h">Дождь &rarr; такси, без контроля метро</div>
+        <div class="refute-v refute-ok">+1.12%</div>
+        <div class="sub" style="margin:4px 0 0">базовая оценка, p=0.0013</div></div>
+      <div class="refute"><div class="refute-h">Дождь &rarr; такси, с контролем метро</div>
+        <div class="refute-v refute-ok">+2.18%</div>
+        <div class="sub" style="margin:4px 0 0">эффект вырос, не сжался, p&lt;0.0001</div></div>
+    </div>
+  </div>
+  <div class="finding purple">
+    <h3>Гипотеза не подтвердилась &mdash; метро и такси растут вместе, не замещают друг друга</h3>
+    <p style="font-size:13.5px">Коэффициент при log(метро) в модели такси: <b>+0.57</b> (p&lt;0.0001) &mdash;
+    <b>положительный</b>, а не отрицательный. Метро-райдершип оказался прокси общей активности города (оба показателя обвалились
+    вместе в 2020 и вместе восстанавливаются), а не конкурирующим каналом: в дни, когда город в целом активнее, растёт и метро,
+    и такси одновременно. После того как эта общая динамика учтена явно, эффект дождя на такси не сжимается, а <b>усиливается</b>
+    (+2.18% против +1.12%) &mdash; на дневных агрегатах нет следа классического "ушёл с платформы метро &rarr; взял такси". Это не
+    исключает такой механизм на уровне отдельной поездки/часа, но на суточных данных он не виден.</p>
+  </div>
+
+  <span class="section-tag p3">3 / Congestion pricing</span>
+  <h2>Что сделал платный въезд в Манхэттен (с 5 января 2025)</h2>
+  <p class="sub">Год-к-году, январь&ndash;июнь 2025 против января&ndash;июня 2024 (одинаковые месяцы &mdash; контроль на сезонность), fhvhv.</p>
+  <div class="yoy-grid">
+    <div class="yoy-card hi"><div class="yoy-borough">Manhattan</div><div class="yoy-val neg">-4.16%</div></div>
+    <div class="yoy-card"><div class="yoy-borough">Brooklyn</div><div class="yoy-val pos">+2.18%</div></div>
+    <div class="yoy-card"><div class="yoy-borough">Queens</div><div class="yoy-val pos">+4.83%</div></div>
+    <div class="yoy-card"><div class="yoy-borough">Bronx</div><div class="yoy-val pos">+5.09%</div></div>
+  </div>
+  <div class="finding warn">
+    <h3>Diff-in-diff: Манхэттен минус 9 п.п. к общему тренду восстановления</h3>
+    <p style="font-size:13.5px">Все округа вне зоны платного въезда выросли год-к-году (Queens +4.8%,
+    Bronx +5.1%, Brooklyn +2.2%) &mdash; это общий тренд восстановления рынка,
+    который мы уже видели в продуктовых метриках. Манхэттен &mdash; единственный, кто упал (-4.16%).
+    Diff-in-diff против Квинса как контрольной группы: <b>-8.99 п.п.</b> &mdash;
+    это чистая, нетривиальная оценка эффекта именно политики, а не общего тренда. Тариф за милю в Манхэттене вырос сильнее всех
+    (+5.81% против +2.69% в Квинсе) &mdash; классическая
+    реакция цена-вверх/объём-вниз на новый сбор.</p>
+  </div>
+
+  <p class="sub" style="margin-top:20px">Въезды в зону платного въезда (CRZ Entries), среднемесячные:</p>
+  <div class="card">
+    <div class="crz-chart"><div class="crz-bar" style="height:29px" title="2025-01: 471,794"></div><div class="crz-bar" style="height:32px" title="2025-02: 477,354"></div><div class="crz-bar" style="height:40px" title="2025-03: 493,047"></div><div class="crz-bar" style="height:44px" title="2025-04: 501,873"></div><div class="crz-bar" style="height:50px" title="2025-05: 512,925"></div><div class="crz-bar" style="height:45px" title="2025-06: 502,433"></div><div class="crz-bar" style="height:38px" title="2025-07: 488,965"></div><div class="crz-bar" style="height:35px" title="2025-08: 484,030"></div><div class="crz-bar" style="height:45px" title="2025-09: 503,934"></div><div class="crz-bar" style="height:47px" title="2025-10: 507,964"></div><div class="crz-bar" style="height:42px" title="2025-11: 496,765"></div><div class="crz-bar" style="height:33px" title="2025-12: 479,158"></div><div class="crz-bar" style="height:8px" title="2026-01: 431,188"></div><div class="crz-bar" style="height:8px" title="2026-02: 431,152"></div><div class="crz-bar" style="height:31px" title="2026-03: 475,608"></div><div class="crz-bar" style="height:38px" title="2026-04: 489,988"></div><div class="crz-bar" style="height:40px" title="2026-05: 494,334"></div><div class="crz-bar" style="height:40px" title="2026-06: 492,967"></div><div class="crz-bar" style="height:31px" title="2026-07: 476,076"></div><div class="crz-bar" style="height:31px" title="2026-08: 476,802"></div></div>
+    <div class="crz-labels"><span>янв 2025</span><span>авг 2026</span></div>
+    <p class="sub" style="margin:12px 0 0">Рост с ~472K/день в январе 2025 до пика ~513K в мае 2025, затем заметный провал в
+    январе&ndash;феврале 2026 (~431K, минимум за весь период) с частичным восстановлением к лету. Похоже на сезонность плюс,
+    возможно, эффект от повышения тарифа платного въезда в начале 2026 года &mdash; это наблюдение, не подтверждённая причина,
+    для точного ответа нужны данные о графике изменения тарифа.</p>
+  </div>
+
+  <div class="caveat">
+    <b>Ограничения.</b> Тест на прогноз погоды &mdash; косвенный прокси, не прямое доказательство (архивных прогнозов нет).
+    Метро-данные только по городу целиком, без разбивки по округам &mdash; тест на замещение нельзя повторить на уровне района.
+    Congestion pricing &mdash; наблюдательное сравнение год-к-году, не рандомизированный эксперимент: возможны и другие отличия
+    2025 года от 2024-го помимо политики (хотя diff-in-diff против трёх других округов снижает этот риск).
+  </div>
+
+  <footer>Источники: TLC_Trip_Data_clean (2019&ndash;2026) · weather_daily_2019_2026.csv (NOAA GHCN) ·
+  mta_daily_ridership.csv (data.ny.gov, MTA Daily Ridership + CRZ/CBD Entries) ·
+  DoWhy 0.8 (backdoor.linear_regression) + statsmodels OLS (HC3/HAC robust SE)</footer>
+</div>

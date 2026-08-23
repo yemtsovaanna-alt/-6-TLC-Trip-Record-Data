@@ -1,0 +1,133 @@
+{
+  "weather": [
+    {
+      "borough": "Manhattan",
+      "pct": 2.11,
+      "p": 0.0001
+    },
+    {
+      "borough": "Brooklyn",
+      "pct": 1.44,
+      "p": 0.0
+    },
+    {
+      "borough": "Citywide",
+      "pct": 1.44,
+      "p": 0.0002
+    },
+    {
+      "borough": "Queens",
+      "pct": 0.89,
+      "p": 0.0172
+    },
+    {
+      "borough": "Bronx",
+      "pct": 0.49,
+      "p": 0.0461
+    },
+    {
+      "borough": "Staten Island",
+      "pct": 0.23,
+      "p": 0.462
+    }
+  ],
+  "congestion": [
+    {
+      "borough": "Manhattan",
+      "yoy": -4.2
+    },
+    {
+      "borough": "Brooklyn",
+      "yoy": 2.2
+    },
+    {
+      "borough": "Queens",
+      "yoy": 4.8
+    },
+    {
+      "borough": "Bronx",
+      "yoy": 5.1
+    }
+  ],
+  "subway_tier": [
+    {
+      "tier": "near (<=354m)",
+      "pct": 1.77,
+      "p": 0.0
+    },
+    {
+      "tier": "mid (354-893m)",
+      "pct": 1.56,
+      "p": 0.0
+    },
+    {
+      "tier": "far (>893m)",
+      "pct": 0.33,
+      "p": 0.1805
+    }
+  ],
+  "events": [
+    {
+      "type": "Super Bowl",
+      "lift": 57.0,
+      "n": 1
+    },
+    {
+      "type": "MLS",
+      "lift": 35.7,
+      "n": 85
+    },
+    {
+      "type": "Tennis",
+      "lift": 35.1,
+      "n": 98
+    },
+    {
+      "type": "NFL",
+      "lift": 30.4,
+      "n": 116
+    },
+    {
+      "type": "MLB",
+      "lift": 29.2,
+      "n": 1045
+    },
+    {
+      "type": "Concert",
+      "lift": 24.6,
+      "n": 80
+    },
+    {
+      "type": "NBA",
+      "lift": 11.3,
+      "n": 530
+    },
+    {
+      "type": "Marathon",
+      "lift": -11.8,
+      "n": 7
+    },
+    {
+      "type": "StreetClosure",
+      "lift": -22.8,
+      "n": 35
+    }
+  ],
+  "dowhy": [
+    {
+      "model": "dist_to_metro",
+      "ate": -13.72,
+      "p": 0.0
+    },
+    {
+      "model": "price_tier",
+      "ate": 3.07,
+      "p": 0.1287
+    }
+  ],
+  "avg": {
+    "post": 21.9,
+    "pre": 28.4,
+    "n": 1997
+  }
+}

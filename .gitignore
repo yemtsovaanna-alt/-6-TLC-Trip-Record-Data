@@ -9,3 +9,4 @@ cache/
 .tmp/
 __pycache__/
 .claude/
+.idea/

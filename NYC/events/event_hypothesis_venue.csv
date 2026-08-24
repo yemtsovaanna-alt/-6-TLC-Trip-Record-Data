@@ -1,6 +1,0 @@
-venue_id,name,price_tier,dist_to_subway_m,n_events,post_pu_lift,pre_do_lift,post_pu_avg
-barclays,Barclays Center,4,395.40399556362144,259,-0.7,1.5,-2.1
-marathon,NYC Marathon finish,1,162.57439648167644,7,-15.6,11.9,-16.2
-msg,Madison Square Garden,5,162.57439648167644,271,17.6,19.9,6.3
-times_sq,Times Square / Broadway,2,10.467593636173302,1,40.2,56.4,40.2
-us_open,USTA Billie Jean King (US Open),4,147.9518986294442,98,23.7,120.8,21.2

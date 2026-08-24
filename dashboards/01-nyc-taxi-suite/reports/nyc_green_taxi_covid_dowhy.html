@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Green taxi x COVID x Uber/Lyft — DoWhy</title>
+<style>
+:root { --bg:#0f1419; --card:#1a222c; --text:#e8eef4; --muted:#9aa7b5;
+  --accent:#0d8f82; --uber:#06C167; --lyft:#FF00BF; --green:#2E8B57; }
+body { margin:0; font-family:Segoe UI,system-ui,sans-serif; background:var(--bg); color:var(--text);
+  line-height:1.55; max-width:920px; margin-inline:auto; padding:32px 20px 64px; }
+h1 { font-size:1.75rem; margin:0 0 8px; }
+h2 { font-size:1.25rem; margin:28px 0 10px; color:var(--accent); }
+.lead { color:var(--muted); font-size:1.05rem; margin-bottom:24px; }
+.card { background:var(--card); border-radius:12px; padding:16px 18px; margin:14px 0; }
+.kpi { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.kpi .card { text-align:center; }
+.kpi b { display:block; font-size:1.6rem; color:var(--accent); }
+.kpi span { color:var(--muted); font-size:0.85rem; }
+table { width:100%; border-collapse:collapse; font-size:0.92rem; }
+th, td { text-align:left; padding:8px 10px; border-bottom:1px solid #2a3440; }
+th { color:var(--muted); font-weight:600; }
+.uber { color:var(--uber); } .lyft { color:var(--lyft); } .g { color:var(--green); }
+.verdict { border-left:4px solid var(--accent); padding-left:14px; margin:18px 0; }
+ul { padding-left:1.2rem; }
+</style>
+<h1>Правда ли, что COVID «убил» green taxi в NYC?</h1>
+<p class="lead">DoWhy / TWFE на TLC 2019–2025 + открытые источники по марже
+<span class="uber">Uber</span> / <span class="lyft">Lyft</span>.</p>
+<div class="verdict card">
+<strong>Короткий ответ:</strong> COVID <em>не</em> убил green в одиночку.
+В 2020 green и yellow упали почти одинаково (~−72%). Разница — в восстановлении:
+к 2025 FHVHV <strong>104%</strong> от 2019, yellow <strong>53%</strong>, green только
+<strong>9%</strong>. Популяцию не вернули конкуренция apps + запрет CBD/аэропортов + отток водителей.
+</div>
+<h2>1. Кто восстановился после COVID?</h2>
+<div class="kpi">
+  <div class="card"><b>9.2%</b><span class="g">Green 2025 vs 2019</span></div>
+  <div class="card"><b>52.8%</b><span>Yellow 2025 vs 2019</span></div>
+  <div class="card"><b>104.3%</b><span class="uber">FHVHV 2025 vs 2019</span></div>
+</div>
+<div class="card"><table>
+<tr><th>Год</th><th>Yellow</th><th>Green</th><th>FHVHV</th></tr>
+<tr><td>2019</td><td>100.0</td><td>100.0</td><td>100.0</td></tr>
+<tr><td>2020</td><td>28.9</td><td>27.2</td><td>61.2</td></tr>
+<tr><td>2021</td><td>36.2</td><td>16.8</td><td>74.7</td></tr>
+<tr><td>2022</td><td>46.4</td><td>12.9</td><td>90.8</td></tr>
+<tr><td>2023</td><td>44.4</td><td>12.2</td><td>99.5</td></tr>
+<tr><td>2024</td><td>47.5</td><td>10.2</td><td>102.5</td></tr>
+<tr><td>2025</td><td>52.8</td><td>9.2</td><td>104.3</td></tr>
+
+</table>
+<p>2020: yellow 28.9 / green 27.2 — общий шок. Дальше пути разошлись.
+Пресса: ~539 green drivers (2026) vs ~7521 на пике 2015.</p></div>
+<h2>2. DoWhy / TWFE</h2>
+<div class="card">
+<p>Treatment = FHVHV share в non-green поездках; outcome = log(trips); demean zone→year + DoWhy backdoor.</p>
+<table>
+<tr><th>Модель</th><th>ATE (log)</th><th>p</th><th>Комментарий</th></tr>
+<tr><td>log(green) ~ share</td><td>+7.844</td><td>6.374e-08</td>
+<td>share-спека для sparse green нестабильна</td></tr>
+<tr><td>log(yellow) ~ share</td><td>-7.169</td><td>8.498e-25</td>
+<td>сильная каннибализация yellow</td></tr>
+<tr><td>log(green) ~ log(fhvhv)</td><td>-0.077</td><td>0.407</td>
+<td>предпочтительная спека: слабоотриц., часто NS</td></tr>
+</table>
+<p>Кросс-секция recovery (2025/2019), n=239: mean green=0.083,
+yellow=1.759; coef share_2019=-0.405
+(p=1.842e-15); coef Δlog fhvhv=-0.064
+(p=0.07138).</p>
+</div>
+<h2>3. Почему популяция не вернулась</h2>
+<div class="card">
+<p>COVID обнулил спрос у всех сразу. Дальше рынок разъехался по разным рельсам.
+Yellow частично ожил там, где есть плотный спрос: Manhattan CBD и аэропорты.
+Apps вернули плотность водителей через диспетчеризацию, ETA и оплату в приложении —
+и к 2025 уже превысили уровень 2019. Green остался в нише, где apps сильнее всего:
+outer boroughs и street-hail, без права брать пассажиров с улицы в CBD и на аэропортах.</p>
+<p>Отсюда цепочка: меньше выгодных поездок → ниже дневной заработок (~$114 → ~$52) →
+водители уходят (~7.5k в 2015 → ~0.5k) → ещё меньше машин на улице → ещё слабее street-hail.
+Пилоты TLC без доступа к dense demand эту экономику не чинят.</p>
+<ul>
+<li>Падение 2020 у green ≈ у yellow — не COVID-unique шок.</li>
+<li>Регуляторный капкан: нет street-hail в CBD/аэропортах.</li>
+<li>В boroughs apps выигрывают по ETA и удобству оплаты.</li>
+<li>Отток предложения водителей закрепляет низкую плотность.</li>
+</ul>
+</div>
+<h2>4. Маржа и стратегии Uber / Lyft</h2>
+<div class="card">
+<h3 class="uber">Uber</h3><ul><li>Take rate / bookings: ~28–30% of mobility gross bookings → revenue (reporting differs from Lyft); US rideshare share ~76% (Gridwise 2025).</li><li>Стратегия: densify supply (waitlists, WAV/EV plate channels), multi-product (Mobility + Delivery + ads) → operating leverage, GAAP profit since 2023, op. margin ~8–9%.</li><li>NYC: ~74% of FHVHV locally in our data; commission to drivers ~20% TLC-reported average for apps; control of ETA/liquidity in outer boroughs where green hails.</li><li>Захват: сначала субсидии rider+driver → network effects → позже рост take / меньше промо, плюс advertising и high-value trips (airport, events).</li></ul>
+<h3 class="lyft">Lyft</h3><ul><li>US share ~24%; NYC ~26% в наших borough-срезах. Фокус North America, без Delivery.</li><li>Gross margin часто выше Uber (~42–43%), но OpEx тяжелее → op. margin ~0–2%; take rate в их отчётности выглядит ниже из‑за net revenue accounting (~14% of GB).</li><li>Стратегия: driver satisfaction / bonuses, плотность в выбранных городах, не война цен до дна против Uber на всех рынках.</li><li>В NYC — устойчивый #2; вместе с Uber = duopoly ~75%+ всех легальных for-hire trips.</li></ul>
+<h3>Для green</h3><ul><li>Apps монетизируют matching + pricing power; green монетизирует только meter street hail на урезанной карте — разный P&L и разный recovery после шока.</li><li>Пока Uber/Lyft держат driver density в boroughs, street-hail green экономически проигрывает по ожиданию и convenience — даже если COVID уже отступил.</li><li>Регуляторные пилоты без доступа к CBD/airport не чинят unit economics; нужен либо доступ к dense demand, либо интеграция в app dispatch на паритете.</li></ul>
+</div>
+<h2>5. Вердикт</h2>
+<div class="card verdict">
+COVID — общий удар. Асимметрия recovery + институты + apps density объясняют,
+почему green не восстановил популяцию. DoWhy: сильная каннибализация yellow;
+для green levels-оценка слабоотрицательная — главный факт это индексы 9% vs 104%.
+</div>
+<p style="color:var(--muted);font-size:0.85rem">Скрипт: taxi_weather_analysis/causal_green_covid_dowhy.py</p>

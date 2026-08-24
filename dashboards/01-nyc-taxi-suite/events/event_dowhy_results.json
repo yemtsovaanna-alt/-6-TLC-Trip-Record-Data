@@ -1,0 +1,240 @@
+{
+  "hypothesis": "price_tier up & far from metro -> higher post-event taxi lift",
+  "models": {
+    "dist_to_metro": {
+      "label": "Event-level: log(dist to metro) -> post PU lift",
+      "treatment": "log_dist_m",
+      "outcome": "post_pu_lift_pct",
+      "n_obs": 636,
+      "naive_r": -0.2024,
+      "ate": -13.717818686092926,
+      "method": "DoWhy backdoor.linear_regression",
+      "adjustment_set": [
+        "price_tier",
+        "prcp_mm",
+        "tmax_c",
+        "weekend",
+        "et_NBA",
+        "et_Super Bowl",
+        "et_Tennis",
+        "mo_2",
+        "mo_3",
+        "mo_4",
+        "mo_5",
+        "mo_6",
+        "mo_7",
+        "mo_8",
+        "mo_9",
+        "mo_10",
+        "mo_11",
+        "mo_12",
+        "wd_1",
+        "wd_2",
+        "wd_3",
+        "wd_4",
+        "wd_5",
+        "wd_6"
+      ],
+      "ci95": [
+        -18.894737225633676,
+        -8.540900146552175
+      ],
+      "p_value": 2.645094721118188e-07,
+      "refutations": {
+        "placebo": -0.3006417730076688,
+        "subset80": -13.606117945411654,
+        "random_common_cause": -13.702123066544543
+      },
+      "cluster_error": "invalid syntax (<unknown>, line 1)"
+    },
+    "price_tier": {
+      "label": "Event-level: price_tier -> post PU lift",
+      "treatment": "price_tier",
+      "outcome": "post_pu_lift_pct",
+      "n_obs": 636,
+      "naive_r": 0.0603,
+      "ate": 3.0748266694468844,
+      "method": "DoWhy backdoor.linear_regression",
+      "adjustment_set": [
+        "log_dist_m",
+        "prcp_mm",
+        "tmax_c",
+        "weekend",
+        "et_NBA",
+        "et_Super Bowl",
+        "et_Tennis",
+        "mo_2",
+        "mo_3",
+        "mo_4",
+        "mo_5",
+        "mo_6",
+        "mo_7",
+        "mo_8",
+        "mo_9",
+        "mo_10",
+        "mo_11",
+        "mo_12",
+        "wd_1",
+        "wd_2",
+        "wd_3",
+        "wd_4",
+        "wd_5",
+        "wd_6"
+      ],
+      "ci95": [
+        -0.8942935852031937,
+        7.043946924096966
+      ],
+      "p_value": 0.1286923756178684,
+      "refutations": {
+        "placebo": -0.28936649637701084,
+        "subset80": 2.990234678177281,
+        "random_common_cause": 3.0764382466488382
+      },
+      "cluster_error": "invalid syntax (<unknown>, line 1)"
+    },
+    "premium_binary": {
+      "label": "Event-level: premium (tier>=4) -> post PU lift",
+      "treatment": "premium",
+      "outcome": "post_pu_lift_pct",
+      "n_obs": 636,
+      "naive_r": 0.0506,
+      "ate": 14.270461783439373,
+      "method": "DoWhy backdoor.linear_regression",
+      "adjustment_set": [
+        "log_dist_m",
+        "prcp_mm",
+        "tmax_c",
+        "weekend",
+        "et_NBA",
+        "et_Super Bowl",
+        "et_Tennis",
+        "mo_2",
+        "mo_3",
+        "mo_4",
+        "mo_5",
+        "mo_6",
+        "mo_7",
+        "mo_8",
+        "mo_9",
+        "mo_10",
+        "mo_11",
+        "mo_12",
+        "wd_1",
+        "wd_2",
+        "wd_3",
+        "wd_4",
+        "wd_5",
+        "wd_6"
+      ],
+      "ci95": [
+        -7.678111054909589,
+        36.21903462178834
+      ],
+      "p_value": 0.2021539697929901,
+      "refutations": {
+        "placebo": 0.4270812101909268,
+        "subset80": 14.401244991130755,
+        "random_common_cause": 14.367393762889737
+      },
+      "cluster_error": "invalid syntax (<unknown>, line 1)"
+    }
+  },
+  "venue_level": {
+    "by_venue_table": [
+      {
+        "venue_id": "barclays",
+        "name": "Barclays Center",
+        "price_tier": 4,
+        "dist_to_subway_m": 395.40399556362144,
+        "post_pu_lift": -0.7,
+        "n": 259,
+        "log_dist_m": 5.982433882030719
+      },
+      {
+        "venue_id": "marathon",
+        "name": "NYC Marathon finish",
+        "price_tier": 1,
+        "dist_to_subway_m": 162.57439648167644,
+        "post_pu_lift": -15.6,
+        "n": 7,
+        "log_dist_m": 5.097267911197881
+      },
+      {
+        "venue_id": "msg",
+        "name": "Madison Square Garden",
+        "price_tier": 5,
+        "dist_to_subway_m": 162.57439648167644,
+        "post_pu_lift": 17.6,
+        "n": 271,
+        "log_dist_m": 5.097267911197881
+      },
+      {
+        "venue_id": "times_sq",
+        "name": "Times Square / Broadway",
+        "price_tier": 2,
+        "dist_to_subway_m": 10.467593636173302,
+        "post_pu_lift": 40.2,
+        "n": 1,
+        "log_dist_m": 2.4395251128077877
+      },
+      {
+        "venue_id": "us_open",
+        "name": "USTA Billie Jean King (US Open)",
+        "price_tier": 4,
+        "dist_to_subway_m": 147.9518986294442,
+        "post_pu_lift": 23.700000000000003,
+        "n": 98,
+        "log_dist_m": 5.003623425834979
+      }
+    ],
+    "dist_model": {
+      "label": "Venue-level: log(dist metro) -> post PU lift",
+      "treatment": "log_dist_m",
+      "outcome": "post_pu_lift",
+      "n_obs": 5,
+      "naive_r": -0.7354,
+      "ate": -11.9207723759001,
+      "method": "DoWhy backdoor.linear_regression",
+      "adjustment_set": [
+        "price_tier"
+      ],
+      "ci95": [
+        -32.10258144029031,
+        8.261036688490108
+      ],
+      "p_value": 0.15673027476490076,
+      "refutations": {
+        "placebo": -0.1607313765952763,
+        "subset80": -12.005601054417985,
+        "random_common_cause": -11.976444633185631
+      },
+      "cluster_ate": -16.902549341611184,
+      "cluster_p": 8.973695668288046e-122
+    },
+    "price_model": {
+      "label": "Venue-level: price_tier -> post PU lift",
+      "treatment": "price_tier",
+      "outcome": "post_pu_lift",
+      "n_obs": 5,
+      "naive_r": 0.2537,
+      "ate": 3.348148148148148,
+      "method": "DoWhy backdoor.linear_regression",
+      "adjustment_set": [
+        "log_dist_m"
+      ],
+      "ci95": [
+        -20.10778320183195,
+        26.804079498128246
+      ],
+      "p_value": 0.6804882664482056,
+      "refutations": {
+        "placebo": 0.6806481481481492,
+        "subset80": 2.33991208576998,
+        "random_common_cause": 2.969866951321292
+      },
+      "cluster_ate": 9.330568455092699,
+      "cluster_p": 8.83627182318026e-06
+    }
+  }
+}

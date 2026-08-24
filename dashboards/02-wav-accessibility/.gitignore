@@ -1,0 +1,8 @@
+.venv/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.mplconfig/
+data/duckdb_tmp/
+data/duckdb_product_tmp/
+*.duckdb.wal

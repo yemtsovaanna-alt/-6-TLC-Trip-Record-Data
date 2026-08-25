@@ -36,12 +36,19 @@ Jupyter-ноутбуки/скрипты, которыми эти витрины 
 ## Структура репозитория
 
 ```
+.github/
+  workflows/ci.yaml         — build/test/deploy (заглушки) + проверка номера задачи в PR
+  CODEOWNERS                — обязательные ревьюверы по разделам
+  PULL_REQUEST_TEMPLATE.md  — шаблон PR (обязательная ссылка на Issue)
 dashboards/
   01-nyc-taxi-suite/        — основной трек: 7 Grafana-дашбордов (было NYC/)
   02-wav-accessibility/     — доступность поездок WAV/AAR (было wav/)
   03-shared-rides/          — совместные поездки Uber/Lyft (было Sharing/)
   04-overview-competition/  — скрины/видео 2 дашбордов проекта-побратима (было Overview+Competition/)
-README.md                   — этот файл, навигатор по всем 11 дашбордам
+branches.yaml                — политика branch protection для main (декларативно)
+review.yaml                  — политика ревью: сколько approve, кто за какой раздел
+CONTRIBUTING.md              — процесс разработки: ветки, ревью, CI, связь PR ↔ Issue
+README.md                    — этот файл, навигатор по всем 11 дашбордам
 ```
 
 | Папка | Что внутри |

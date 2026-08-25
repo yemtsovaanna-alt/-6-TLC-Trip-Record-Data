@@ -1,0 +1,19 @@
+pull_request:
+  required_approving_review_count: 1   # поднять до 2, когда в команде будет 2+ ревьювера
+  require_code_owner_review: true
+  dismiss_stale_reviews: true
+
+# Кто отвечает за какой кусок кода — источник истины для GitHub:
+# .github/CODEOWNERS (реально запрашивает ревью автоматически).
+# Здесь то же самое явно по разделам, для наглядности:
+code_owners:
+  - paths: ["dashboards/01-nyc-taxi-suite/**"]
+    owners: ["@yemtsovaanna-alt"]
+  - paths: ["dashboards/02-wav-accessibility/**"]
+    owners: ["@yemtsovaanna-alt"]
+  - paths: ["dashboards/03-shared-rides/**"]
+    owners: ["@yemtsovaanna-alt"]
+  - paths: ["dashboards/04-overview-competition/**"]
+    owners: ["@yemtsovaanna-alt"]
+  - paths: [".github/**", "*.yaml", "*.md"]
+    owners: ["@yemtsovaanna-alt"]

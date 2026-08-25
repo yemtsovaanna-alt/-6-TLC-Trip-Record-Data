@@ -10,6 +10,11 @@
 Комбинация этих трех флагов дает 8 сегментов; базовый (обычная поездка без всех трех
 флагов) — 90.99% всех поездок.
 
+## Данные
+
+- **Источник:** TLC Trip Record Data, FHVHV tripdata, период **2025-01 … 2026** (~324 млн строк).
+  Сырые parquet: [Яндекс.Диск](https://disk.yandex.ru/d/p1YAHtu15H2tlA).
+
 ## Дашборд
 
 **WAV/Accessibility Dashboard** — запись демонстрации: [`wav_dashboard.mp4`](wav_dashboard.mp4).

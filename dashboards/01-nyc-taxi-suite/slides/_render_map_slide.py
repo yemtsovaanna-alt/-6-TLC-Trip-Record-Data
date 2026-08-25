@@ -84,7 +84,7 @@ svg {{ width: 100%; height: 100%; display: block; }}
     Соседние округа — монохромный серый контур; поверх — метрика синий→оранжевый.</p>
     <div class="legend">
       <h2>Время ожидания</h2>
-      <div class="sub">минуты · надёжные зоны (n ≥ {DATA.get('min_wait_n', 50)})</div>
+      <div class="sub">минуты · надежные зоны (n ≥ {DATA.get('min_wait_n', 50)})</div>
       <div class="grad"></div>
       <div class="scale"><span>быстрее</span><span>дольше</span></div>
       <div class="sw"><i style="background:{CONTEXT}"></i>Соседние территории (NJ / Westchester / Nassau)</div>

@@ -264,7 +264,7 @@ def render(ev_wait, base_wait, ev_pu, base_pu, zone_ev, zone_base):
     ax1.set_ylabel("pickups", fontsize=11, color=MUTED)
     ax1.tick_params(colors=TEXT)
     ax1.legend(fontsize=10, frameon=False, loc="upper left")
-    ax1.set_title("Объём pickups по часам · MSG + buffer",
+    ax1.set_title("Объем pickups по часам · MSG + buffer",
                   fontsize=13, fontweight="bold", color=TEXT, loc="left", pad=10)
     ax1.text(0.98, 0.95, "окно разъезда", transform=ax1.transAxes,
              ha="right", va="top", fontsize=10, color=HI, fontweight="600")

@@ -22,7 +22,7 @@ TAXI_TYPE_COLORS = {"yellow": "#F3C518", "green": "#2E8B57", "fhv": "#4A4A4A", "
 AGGREGATOR_COLORS = {"Uber": "#06C167", "Lyft": "#FF00BF", "Via": "#00B2A9", "Juno": "#6A0DAD"}
 
 WAIT_PERIOD_LABELS = {
-    "all": "Всё",
+    "all": "Все",
     "morning": "Утро 7–10",
     "day": "День 11–16",
     "evening": "Вечер 16–19",
@@ -387,14 +387,14 @@ svg {{ width: 100%; height: 100%; display: block; background: #dce3ea; }}
       <button class="mode-btn active" data-mode="dominant_type" type="button">Тип такси</button>
       <button class="mode-btn" data-mode="dominant_aggregator" type="button">Агрегатор</button>
       <button class="mode-btn" data-mode="wait" type="button">Ожидание</button>
-      <button class="mode-btn" data-mode="volume" type="button">Объём поездок</button>
+      <button class="mode-btn" data-mode="volume" type="button">Объем поездок</button>
       <button class="mode-btn" data-mode="timelapse" type="button">Таймлапс ▶</button>
       <button class="mode-btn" data-mode="event_timelapse" type="button">События ▶</button>
     </div>
 
     <div class="section" id="period-section">
       <div class="section-title">Период суток</div>
-      <button class="period-btn active" data-period="all" type="button">Всё</button>
+      <button class="period-btn active" data-period="all" type="button">Все</button>
       <button class="period-btn" data-period="morning" type="button">Утро 7–10</button>
       <button class="period-btn" data-period="day" type="button">День 11–16</button>
       <button class="period-btn" data-period="evening" type="button">Вечер 16–19</button>

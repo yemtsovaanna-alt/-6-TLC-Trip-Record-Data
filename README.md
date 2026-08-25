@@ -14,19 +14,19 @@ Yellow/Green/FHV/FHVHV (такси и Uber/Lyft/Via/Juno) — за 2019–2026. 
 
 ## Карта дашбордов
 
-| # | Дашборд | Раздел | О чем | Подробнее |
-|---|---|---|---|---|
-| 1 | **NYC Taxi — Обзор** (home) | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | North Star/Guardrail метрики одним взглядом | [README.md](dashboards/01-nyc-taxi-suite/README.md#00-home) |
-| 2 | **NYC Taxi — Данные и продуктовые метрики** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | North Star/Guardrail/Proxy метрики по годам | [README.md](dashboards/01-nyc-taxi-suite/README.md#01-data-metrics) |
-| 3 | **NYC Taxi — Погода, метро, congestion pricing** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Дождь/температура/метро vs спрос, эффект платного въезда в Manhattan CBD | [README.md](dashboards/01-nyc-taxi-suite/README.md#02-weather-metro) |
-| 4 | **NYC Taxi — Спрос, цена, прогноз** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Ожидание по зонам/часам, точность прогноза спроса, эластичность цены | [README.md](dashboards/01-nyc-taxi-suite/README.md#03-demand-price) |
-| 5 | **NYC Taxi — Эффект COVID по типам такси** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Падение и восстановление по типам такси/округам/агрегаторам, 2019=100 | [README.md](dashboards/01-nyc-taxi-suite/README.md#04-covid) |
-| 6 | **NYC Taxi — Конкуренция агрегаторов и зоны доминирования** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Доли рынка Uber/Lyft/Via/Juno по времени, округам, зонам | [README.md](dashboards/01-nyc-taxi-suite/README.md#05-aggregators) |
-| 7 | **NYC Taxi — Мероприятия и спрос на такси** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Всплеск спроса вокруг концертов/матчей, DoWhy-причинность | [README.md](dashboards/01-nyc-taxi-suite/README.md#06-events) |
-| 8 | **WAV/Accessibility Dashboard** | [`02-wav-accessibility/`](dashboards/02-wav-accessibility/README.md) | Доступные для колясок поездки (WAV/AAR) — доля, ожидание, экономика | [README.md](dashboards/02-wav-accessibility/README.md) |
-| 9 | **Совместные поездки (Shared rides)** | [`03-shared-rides/`](dashboards/03-shared-rides/README.md) | Шеринг Uber/Lyft: кто чаще матчится, когда, где | [README.md](dashboards/03-shared-rides/README.md) |
-| 10 | **NYC FHVHV Taxi Overview** | [`04-overview-competition/`](dashboards/04-overview-competition/README.md) | Объем поездок, выручка, комиссия, гео-экономика | [README.md](dashboards/04-overview-competition/README.md) |
-| 11 | **Uber vs Lyft: Competition Overview** | [`04-overview-competition/`](dashboards/04-overview-competition/README.md) | Прямое сравнение Uber/Lyft: бронирования, типы поездок, ожидание, surge | [README.md](dashboards/04-overview-competition/README.md) |
+| # | Дашборд | Раздел | О чем | Ответственный | Подробнее |
+|---|---|---|---|---|---|
+| 1 | **NYC Taxi — Обзор** (home) | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | North Star/Guardrail метрики одним взглядом | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#00-home) |
+| 2 | **NYC Taxi — Данные и продуктовые метрики** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | North Star/Guardrail/Proxy метрики по годам | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#01-data-metrics) |
+| 3 | **NYC Taxi — Погода, метро, congestion pricing** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Дождь/температура/метро vs спрос, эффект платного въезда в Manhattan CBD | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#02-weather-metro) |
+| 4 | **NYC Taxi — Спрос, цена, прогноз** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Ожидание по зонам/часам, точность прогноза спроса, эластичность цены | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#03-demand-price) |
+| 5 | **NYC Taxi — Эффект COVID по типам такси** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Падение и восстановление по типам такси/округам/агрегаторам, 2019=100 | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#04-covid) |
+| 6 | **NYC Taxi — Конкуренция агрегаторов и зоны доминирования** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Доли рынка Uber/Lyft/Via/Juno по времени, округам, зонам | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#05-aggregators) |
+| 7 | **NYC Taxi — Мероприятия и спрос на такси** | [`01-nyc-taxi-suite/`](dashboards/01-nyc-taxi-suite/README.md) | Всплеск спроса вокруг концертов/матчей, DoWhy-причинность | [@ddandreev2003](https://github.com/ddandreev2003) | [README.md](dashboards/01-nyc-taxi-suite/README.md#06-events) |
+| 8 | **WAV/Accessibility Dashboard** | [`02-wav-accessibility/`](dashboards/02-wav-accessibility/README.md) | Доступные для колясок поездки (WAV/AAR) — доля, ожидание, экономика | [@annamyaktinova](https://github.com/annamyaktinova) | [README.md](dashboards/02-wav-accessibility/README.md) |
+| 9 | **Совместные поездки (Shared rides)** | [`03-shared-rides/`](dashboards/03-shared-rides/README.md) | Шеринг Uber/Lyft: кто чаще матчится, когда, где | [@SigmaMalia](https://github.com/SigmaMalia) | [README.md](dashboards/03-shared-rides/README.md) |
+| 10 | **NYC FHVHV Taxi Overview** (основной в разделе) | [`04-overview-competition/`](dashboards/04-overview-competition/README.md) | Объем поездок, выручка, комиссия, гео-экономика | [@yemtsovaanna-alt](https://github.com/yemtsovaanna-alt) | [README.md](dashboards/04-overview-competition/README.md) |
+| 11 | **Uber vs Lyft: Competition Overview** | [`04-overview-competition/`](dashboards/04-overview-competition/README.md) | Прямое сравнение Uber/Lyft: бронирования, типы поездок, ожидание, surge | [@yemtsovaanna-alt](https://github.com/yemtsovaanna-alt) | [README.md](dashboards/04-overview-competition/README.md) |
 
 ### Что из этого реально живет в репозитории
 

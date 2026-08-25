@@ -9,32 +9,14 @@
 
 
 1. Главный дашборд — **NYC FHVHV Taxi Overview** (раздел `01-overview-competition`). Данные FHVHV (Uber/Lyft) взяты из https://disk.yandex.ru/d/p1YAHtu15H2tlA. Рассматриваемый период: 2025-01-01 00:00:00 по 2026-04-30 23:59:59.
-
-
-2. Дашборд про конкуренцию - **Uber vs Lyft: Competition Overview** (раздел `01-overview-competition`).  Данные FHVHV (Uber/Lyft) взяты из https://disk.yandex.ru/d/p1YAHtu15H2tlA. Рассматриваемый период: 2025-01-01 00:00:00 по 2026-04-30 23:59:59.
-
-
+2. Дашборд про конкуренцию - **Uber vs Lyft: Competition Overview** (раздел `01-overview-competition`). Данные FHVHV (Uber/Lyft) взяты из https://disk.yandex.ru/d/p1YAHtu15H2tlA. Рассматриваемый период: 2025-01-01 00:00:00 по 2026-04-30 23:59:59.
 3. Дашборд про корреляцию между погодой, точками метро и кол-вом поездок - **NYC Taxi — Погода, метро, congestion pricing** (раздел `02-nyc-taxi-suite/`). Источники: taxi_weather_analysis/extend_weather.py (погода, Open-Meteo), fetch_mta_ridership.py (MTA), causal_congestion_pricing.py. Отчеты: reports/nyc_taxi_weather_causal.html, reports/nyc_subway_access.html. Рассматриваемый период: 2019-01-01 по 2026-08-09.
-
-  
 4. Дашборд про прогноз спроса на такси - **NYC Taxi — Спрос, цена, прогноз** (раздел `02-nyc-taxi-suite`). Источники: reports/nyc_demand_forecast.html, reports/nyc_price_elasticity.html, reports/nyc_subway_access.html, reports/nyc_zone_clusters.html. Рассматриваемый период: 2024-2025.
-
-
 5. Дашборд про эффект COVID - **NYC Taxi — Эффект COVID по типам такси** (раздел `02-nyc-taxi-suite`). Источник: reports/nyc_green_taxi_covid_dowhy.html. Рассматриваемый период: 2019-2025.
-
-
 6. Дашборд про конкуренцию в разрезе географии - **NYC Taxi — Конкуренция агрегаторов и зоны доминирования** (раздел `02-nyc-taxi-suite`). Рассматриваемый период: 2024.
-
-
 7. Дашборд про мероприятия и спрос на такси - **NYC Taxi — Мероприятия и спрос на такси** (раздел `02-nyc-taxi-suite`). Рассматриваемый период: 2024-2025.
-
-
 8. Дашборд про WAV/ARR поездки - **WAV/Accessibility Dashboard** (раздел `03-wav-accessibility`). Данные FHVHV (Uber/Lyft) взяты из https://disk.yandex.ru/d/p1YAHtu15H2tlA. Рассматриваемый период: 2025-01-01 00:00:00 по 2026-04-30 23:59:59.
-
-
 9. Дашборд про шейринг поездки - **Совместные поездки (Shared rides)** (раздел `04-shared-rides/`). Данные FHVHV (Uber/Lyft) взяты из https://disk.yandex.ru/d/p1YAHtu15H2tlA. Рассматриваемый период: 2025-01-01 00:00:00 по 2026-04-30 23:59:59.
-
-
 
 
 
@@ -58,9 +40,9 @@
 
 | Дашборды | Что здесь есть |
 |---|---|
-| 1–2 (NYC FHVHV Overview, Uber vs Lyft) | Фото/видео готового результата и техническая справка о его устройстве. `taxi_data_2025_2026` (свой DuckDB→Postgres ETL), который в этом репозитории не хранится целиком |
+| 1–2 (NYC FHVHV Overview, Uber vs Lyft) | Фото/видео готового результата и техническая справка о его устройстве ([`GITHUB_HANDOFF.md`](dashboards/01-overview-competition/GITHUB_HANDOFF.md)). Сами дашборды строит отдельный проект-побратим `taxi_data_2025_2026` (свой DuckDB→Postgres ETL), который в этом репозитории не хранится целиком |
 | 3–7 (`02-nyc-taxi-suite`) | Полностью: репозиторий сам генерирует и провижнит живой Grafana-инстанс (`dashboards/02-nyc-taxi-suite/grafana_provisioning/`) |
-| 10–11 (WAV, Shared rides) | Витрины и ноутбуки, которыми дашборд обоснован, — здесь. Сама Grafana-панель как JSON не экспортирована; посмотреть, как она выглядит, — по видео/описанию в README раздела |
+| 8–9 (WAV, Shared rides) | Витрины и ноутбуки, которыми дашборд обоснован, — здесь. Сама Grafana-панель как JSON не экспортирована; посмотреть, как она выглядит, — по видео/описанию в README раздела |
 
 ## Структура репозитория
 
@@ -77,7 +59,7 @@ dashboards/
 branches.yaml               — политика branch protection для main (декларативно)
 review.yaml                 — политика ревью: сколько approve, кто за какой раздел
 CONTRIBUTING.md             — процесс разработки: ветки, ревью, CI, связь PR ↔ Issue
-README.md                   — этот файл, навигатор по всем 11 дашбордам
+README.md                   — этот файл, навигатор по всем 9 дашбордам
 ```
 
 | Папка | Что внутри |

@@ -7,13 +7,13 @@ pull_request:
 # .github/CODEOWNERS (реально запрашивает ревью автоматически).
 # Здесь то же самое явно по разделам, для наглядности:
 code_owners:
-  - paths: ["dashboards/01-nyc-taxi-suite/**"]
+  - paths: ["dashboards/02-nyc-taxi-suite/**"]
     owners: ["@yemtsovaanna-alt"]
-  - paths: ["dashboards/02-wav-accessibility/**"]
+  - paths: ["dashboards/03-wav-accessibility/**"]
     owners: ["@yemtsovaanna-alt"]
-  - paths: ["dashboards/03-shared-rides/**"]
+  - paths: ["dashboards/04-shared-rides/**"]
     owners: ["@yemtsovaanna-alt"]
-  - paths: ["dashboards/04-overview-competition/**"]
+  - paths: ["dashboards/01-overview-competition/**"]
     owners: ["@yemtsovaanna-alt"]
   - paths: [".github/**", "*.yaml", "*.md"]
     owners: ["@yemtsovaanna-alt"]

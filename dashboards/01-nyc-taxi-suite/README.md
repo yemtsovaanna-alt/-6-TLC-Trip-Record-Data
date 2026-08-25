@@ -1,8 +1,9 @@
 # dashboards/01-nyc-taxi-suite/ — основной трек: 7 Grafana-дашбордов по TLC trip data
 
-Данные: NYC TLC Trip Record Data (Yellow, Green, FHV, FHVHV), 2019–2026. Очистка описана
-в [`DATA_CLEANING_LOG.md`](DATA_CLEANING_LOG.md) (правила фильтрации по типу такси +
-статистика по каждому обработанному файлу).
+Данные: NYC TLC Trip Record Data (Yellow, Green, FHV, FHVHV), 2019–2026. Источник:
+[официальный сайт NYC TLC](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
+Очистка описана в [`DATA_CLEANING_LOG.md`](DATA_CLEANING_LOG.md) (правила фильтрации по
+типу такси + статистика по каждому обработанному файлу).
 
 ## Пайплайн
 

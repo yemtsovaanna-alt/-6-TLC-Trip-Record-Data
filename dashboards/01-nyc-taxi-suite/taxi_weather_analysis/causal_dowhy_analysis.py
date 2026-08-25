@@ -1,6 +1,6 @@
 """
 Причинный анализ: влияет ли дождь на число поездок FHVHV (Uber/Lyft/Via) в Нью-Йорке,
-и какая часть этого эффекта идёт через цену (base_passenger_fare)?
+и какая часть этого эффекта идет через цену (base_passenger_fare)?
 
 ВАЖНО (честно): этот скрипт НЕ выполнялся мной в песочнице — там нет сети, чтобы
 поставить dowhy (networkx, statsmodels, scikit-learn, econml и т.п. тянутся из PyPI
@@ -8,8 +8,8 @@
   - API у mediation-эстиматора (`mediation.two_stage_regression`) в разных версиях
     dowhy отличается сигнатурой параметров method_params — сверьтесь с
     `help(dowhy.causal_estimators.two_stage_regression_estimator.TwoStageRegressionEstimator)`
-    в вашей версии, если упадёт с TypeError.
-  - Возможны мелкие несовпадения имён kwargs в refute_estimate() между версиями.
+    в вашей версии, если упадет с TypeError.
+  - Возможны мелкие несовпадения имен kwargs в refute_estimate() между версиями.
 Считайте это черновиком "на 90% готово", а не гарантированно рабочим скриптом.
 
 Установка:
@@ -34,7 +34,7 @@ from dowhy import CausalModel
 def build_dataset(taxi_dir: str, weather_csv: str) -> pd.DataFrame:
     """Пересобирает дневной датасет: поездки FHVHV, цена за милю, погода, календарь.
 
-    Всё считается с нуля из parquet + CSV с погодой, чтобы скрипт был самодостаточным.
+    Все считается с нуля из parquet + CSV с погодой, чтобы скрипт был самодостаточным.
     """
     con = duckdb.connect()
 
@@ -111,7 +111,7 @@ def run_total_effect(df, graph, outcome="fhvhv_trips"):
     """Полный эффект осадков на поездки (напрямую + через цену).
 
     Для полного эффекта fare_per_mile НЕ включаем в adjustment set — DoWhy сам
-    поймёт по графу, что это медиатор, а не конфаундер, и не будет на него
+    поймет по графу, что это медиатор, а не конфаундер, и не будет на него
     условливаться (условливание на медиаторе перекрыло бы часть эффекта).
     """
     model = CausalModel(data=df, treatment="prcp_mm", outcome=outcome, graph=graph)
@@ -136,7 +136,7 @@ def run_mediation_effects(df, graph, outcome="fhvhv_trips"):
     """Natural Direct Effect (NDE, эффект в обход цены) и
     Natural Indirect Effect (NIE, эффект ЧЕРЕЗ цену) — декомпозиция.
 
-    Total ≈ NDE + NIE (приблизительно, без учёта взаимодействий трактовка-медиатор).
+    Total ≈ NDE + NIE (приблизительно, без учета взаимодействий трактовка-медиатор).
     """
     model = CausalModel(data=df, treatment="prcp_mm", outcome=outcome, graph=graph)
 

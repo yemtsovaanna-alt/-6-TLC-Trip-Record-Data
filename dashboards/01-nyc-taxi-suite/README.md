@@ -44,7 +44,7 @@ Postgres `nyc_taxi`).
 почасовая оплата водителя, тариф/милю), 2 Proxy (ликвидность рынка = поездок / активная
 зона-час) — динамика по годам + сводная таблица. Фильтр: `$year`.
 Витрина: `product_metrics_yearly` — считается `_compute_product_metrics.py`.
-Отчёт-первоисточник: [`reports/nyc_taxi_product_metrics.html`](reports/nyc_taxi_product_metrics.html).
+Отчет-первоисточник: [`reports/nyc_taxi_product_metrics.html`](reports/nyc_taxi_product_metrics.html).
 
 ### 02-weather-metro
 **NYC Taxi — Погода, метро, congestion pricing** (`02-weather-metro.json`, uid `nyc-taxi-weather-metro`)
@@ -54,7 +54,7 @@ Postgres `nyc_taxi`).
 Витрины: `daily_citywide`, `weather_effect_by_borough`, `rain_effect_by_subway_tier`,
 `congestion_pricing_yoy`. Источники: `taxi_weather_analysis/extend_weather.py` (погода,
 Open-Meteo), `fetch_mta_ridership.py` (MTA), `causal_congestion_pricing.py`.
-Отчёты: [`reports/nyc_taxi_weather_causal.html`](reports/nyc_taxi_weather_causal.html),
+Отчеты: [`reports/nyc_taxi_weather_causal.html`](reports/nyc_taxi_weather_causal.html),
 [`reports/nyc_subway_access.html`](reports/nyc_subway_access.html).
 
 ### 03-demand-price
@@ -62,7 +62,7 @@ Open-Meteo), `fetch_mta_ridership.py` (MTA), `causal_congestion_pricing.py`.
 Самый плотный дашборд: карта зон по времени ожидания, heatmap ожидания по часу×дню недели
 (с фильтром агрегатора), медианное ожидание по агрегаторам, топ-15 зон с худшей подачей,
 зоны «принадлежащие» типу такси, точность прогноза спроса (MAPE), цена→спрос (naive vs IV),
-кластеры зон по ритму спроса, влияние удалённости от метро, спрос по округам во времени,
+кластеры зон по ритму спроса, влияние удаленности от метро, спрос по округам во времени,
 ожидание в аэропортах. Фильтры: `$borough`, `$taxi_type`, `$aggregator`, `$cluster`.
 Витрины: `zone_wait_time`, `zone_wait_by_aggregator`, `wait_by_hour_dow_aggregator`,
 `zone_dominant_type`, `forecast_results`, `price_elasticity`, `zone_clusters`,
@@ -70,7 +70,7 @@ Open-Meteo), `fetch_mta_ridership.py` (MTA), `causal_congestion_pricing.py`.
 Построители: `_build_zone_wait_tables.py`, `_zone_clustering.py`,
 `taxi_weather_analysis/forecast_demand.py`, `causal_price_elasticity.py`,
 `causal_subway_access.py`. Также интерактивная кастомная карта зон — см. ниже.
-Отчёты: [`reports/nyc_demand_forecast.html`](reports/nyc_demand_forecast.html),
+Отчеты: [`reports/nyc_demand_forecast.html`](reports/nyc_demand_forecast.html),
 [`reports/nyc_price_elasticity.html`](reports/nyc_price_elasticity.html),
 [`reports/nyc_subway_access.html`](reports/nyc_subway_access.html),
 [`reports/nyc_zone_clusters.html`](reports/nyc_zone_clusters.html).
@@ -78,14 +78,14 @@ Open-Meteo), `fetch_mta_ridership.py` (MTA), `causal_congestion_pricing.py`.
 ### 04-covid
 **NYC Taxi — Эффект COVID по типам такси** (`04-covid.json`, uid `nyc-taxi-covid`)
 Индексированное (янв 2019 = 100, метро — март 2020 = 100) сравнение падения/восстановления
-Green/Yellow/FHVHV к 2025 году, абсолютные объёмы по месяцам, восстановление по округам и по
+Green/Yellow/FHVHV к 2025 году, абсолютные объемы по месяцам, восстановление по округам и по
 агрегаторам (помесячно и погодично), таблица «когда было дно COVID по каждому типу».
 Фильтры: `$taxi_type`, `$borough`, `$aggregator`.
 Витрины: `monthly_by_type`, `monthly_by_type_indexed`, `monthly_recovery_indexed`,
 `yearly_recovery_indexed`, `aggregator_monthly_indexed`, `yearly_aggregator_indexed`.
 Построитель: `_build_covid_aggregator_tables.py`, причинность —
 `taxi_weather_analysis/causal_green_covid_dowhy.py`.
-Отчёт: [`reports/nyc_green_taxi_covid_dowhy.html`](reports/nyc_green_taxi_covid_dowhy.html).
+Отчет: [`reports/nyc_green_taxi_covid_dowhy.html`](reports/nyc_green_taxi_covid_dowhy.html).
 
 ### 05-aggregators
 **NYC Taxi — Конкуренция агрегаторов и зоны доминирования** (`05-aggregators.json`, uid `nyc-taxi-aggregators`)
@@ -96,7 +96,7 @@ Green/Yellow/FHVHV к 2025 году, абсолютные объёмы по ме
 
 ### 06-events
 **NYC Taxi — Мероприятия и спрос на такси** (`06-events.json`, uid `nyc-taxi-events`)
-Причинный анализ (DoWhy): влияет ли удалённость события от метро и ценовой тир площадки на
+Причинный анализ (DoWhy): влияет ли удаленность события от метро и ценовой тир площадки на
 всплеск спроса (lift) до/после мероприятия. ATE + p-value по двум факторам, таймлапс событий
 на карте, разбивка всплеска по типу события (NFL/NBA/MLB/marathon/US Open/концерты), топ-20
 событий по величине всплеска. Фильтр: `$event_type`.
@@ -105,7 +105,7 @@ Green/Yellow/FHVHV к 2025 году, абсолютные объёмы по ме
 Построители: `_fetch_nyc_events.py` → `_build_event_impact.py` → `_build_event_timelapse.py`
 → `_build_event_hypothesis.py`, причинность — `taxi_weather_analysis/causal_event_taxi_dowhy.py`.
 Одна команда для всего: `_run_event_analysis.py`.
-Отчёт: [`reports/nyc_event_taxi_dowhy.html`](reports/nyc_event_taxi_dowhy.html).
+Отчет: [`reports/nyc_event_taxi_dowhy.html`](reports/nyc_event_taxi_dowhy.html).
 
 ## Кастомная карта зон (используется дашбордом 03)
 
@@ -114,12 +114,12 @@ Green/Yellow/FHVHV к 2025 году, абсолютные объёмы по ме
 Uber/Lyft/Via/Juno/все), режим покрытия (доминирующий тип такси по зоне), слои линий метро
 по официальным цветам MTA (`grafana_provisioning/geojson/subway_*.geojson`, нарезаны
 `_build_subway_line_groups.py`, т.к. категориальная раскраска по полю в Grafana Geomap
-оказалась ненадёжной). Собирается в 2 шага: `_build_map_v2_data.py` (вся тяжёлая
-геопространственная работа/расчёт цвета в Python/DuckDB → один JSON) →
+оказалась ненадежной). Собирается в 2 шага: `_build_map_v2_data.py` (вся тяжелая
+геопространственная работа/расчет цвета в Python/DuckDB → один JSON) →
 `_build_map_v2_artifact.py` (HTML вокруг JSON). Таймлапс почасового спроса добавляет
 `_build_zone_timelapse.py`. Более ранние/альтернативные версии карты в корне этой папки:
 `nyc_taxi_zones_map.html`, `nyc_taxi_flow_map.html` (маршруты A* по дорожной сети —
-`route_flows.py` + `_build_graph_from_pbf.py` + `_prepare_map_svg.py`, отчёт
+`route_flows.py` + `_build_graph_from_pbf.py` + `_prepare_map_svg.py`, отчет
 [`reports/nyc_taxi_flows.html`](reports/nyc_taxi_flows.html)).
 
 ## Слайды

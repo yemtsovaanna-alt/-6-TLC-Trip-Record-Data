@@ -388,7 +388,7 @@ Apps вернули плотность водителей через диспе�
 и к 2025 уже превысили уровень 2019. Green остался в нише, где apps сильнее всего:
 outer boroughs и street-hail, без права брать пассажиров с улицы в CBD и на аэропортах.</p>
 <p>Отсюда цепочка: меньше выгодных поездок → ниже дневной заработок (~$114 → ~$52) →
-водители уходят (~7.5k в 2015 → ~0.5k) → ещё меньше машин на улице → ещё слабее street-hail.
+водители уходят (~7.5k в 2015 → ~0.5k) → еще меньше машин на улице → еще слабее street-hail.
 Пилоты TLC без доступа к dense demand эту экономику не чинят.</p>
 <ul>
 <li>Падение 2020 у green ≈ у yellow — не COVID-unique шок.</li>
@@ -433,7 +433,7 @@ def uber_lyft_strategy_block() -> dict:
         "lyft": [
             "US share ~24%; NYC ~26% в наших borough-срезах. Фокус North America, без Delivery.",
             "Gross margin часто выше Uber (~42–43%), но OpEx тяжелее → op. margin ~0–2%; "
-            "take rate в их отчётности выглядит ниже из‑за net revenue accounting (~14% of GB).",
+            "take rate в их отчетности выглядит ниже из‑за net revenue accounting (~14% of GB).",
             "Стратегия: driver satisfaction / bonuses, плотность в выбранных городах, "
             "не война цен до дна против Uber на всех рынках.",
             "В NYC — устойчивый #2; вместе с Uber = duopoly ~75%+ всех легальных for-hire trips.",

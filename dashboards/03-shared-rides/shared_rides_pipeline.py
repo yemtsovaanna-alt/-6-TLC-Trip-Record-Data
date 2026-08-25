@@ -292,7 +292,7 @@ def hypothesis_1_duration(con: duckdb.DuckDBPyConnection) -> tuple[pd.DataFrame,
     }
     print("\n=== H1: длительность поездки -> вероятность шеринга ===")
     print(f"Chi-square: {chi2:.2f} | p-value: {p_value:.10f} | dof: {dof}")
-    print("GLM Binomial сошёлся:", model.converged)
+    print("GLM Binomial сошелся:", model.converged)
     return stats, summary
 
 
